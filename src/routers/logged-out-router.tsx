@@ -1,3 +1,10 @@
 import React from 'react';
+import { Login } from '../pages/login';
 
-export const LoggedOutRouter = () => <span>Logged out</span>
+export const LoggedOutRouter = () => {
+    return (
+        <div>
+            <Login />
+        </div>
+    )
+}

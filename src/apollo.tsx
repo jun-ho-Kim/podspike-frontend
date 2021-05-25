@@ -1,18 +1,33 @@
 import { ApolloClient, createHttpLink, InMemoryCache, makeVar } from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
+import { LOCALSTORAGE_TOKEN } from "./constants";
 
-// const httpLink = createHttpLink({
-//     uri: 'https://podspike.herokuapp.com/'
-// })
+const token = localStorage.getItem(LOCALSTORAGE_TOKEN);
+export const authTokenVar = makeVar(token);
+export const isLoggedInVar = makeVar(Boolean(token));
+
+const httpLink = createHttpLink({
+    uri: 'https://podspike.herokuapp.com/graphql'
+});
+
+const authLink = setContext((_, { headers }) => {
+    return {
+      headers: {
+        ...headers,
+        "x-jwt": authTokenVar() ?? ""
+      }
+    };
+  });
 
 
 // const authLink = setContext((_, {headers}) => {
 //     return
 // })
 
-export const isLoggedInVar = makeVar(false);
 
 export const client = new ApolloClient({
-    uri: 'https://podspike.herokuapp.com/graphql',
+    link: authLink.concat(httpLink),
+    // uri: 'https://podspike.herokuapp.com/graphql',
     cache: new InMemoryCache({
         typePolicies: {
             Query: {
@@ -20,6 +35,11 @@ export const client = new ApolloClient({
                     isLoggedIn: {
                         read() {
                             return isLoggedInVar();
+                        }
+                    },
+                    token: {
+                        read() {
+                            return authTokenVar();
                         }
                     }
                 }
