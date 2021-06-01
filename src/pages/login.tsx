@@ -78,7 +78,7 @@ export const Login = () => {
                     ref={register({
                         required: "비밀번호를 입력해주세요.",
                         minLength: {
-                            value: 5,
+                            value: 3,
                             message: '비밀번호는 5자리 이상 입력해야 합니다.'
                         },
                         maxLength: {

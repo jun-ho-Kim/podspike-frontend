@@ -29,8 +29,14 @@ export interface CreateAccountInput {
 export interface EpisodeInput {
   title: string;
   category: string;
+  description: string;
+  episodeImg?: string | null;
   podcast: PodcastInput;
   player: UserInputType;
+}
+
+export interface GetPodcastInput {
+  id: number;
 }
 
 export interface LoginInput {
@@ -41,7 +47,9 @@ export interface LoginInput {
 export interface PodcastInput {
   title: string;
   category: string;
+  description?: string | null;
   rating: number;
+  thumbnail?: string | null;
   episodes?: EpisodeInput[] | null;
   user: UserInputType;
   reviews?: ReviewInput[] | null;
