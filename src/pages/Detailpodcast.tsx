@@ -3,10 +3,7 @@ import React from 'react';
 import { useParams } from "react-router-dom";
 import { DetailPodcast, DetailPodcastVariables } from "../__generated__/DetailPodcast";
 
-
-
-
-const PODCAST_QUERY = gql`
+export const PODCAST_QUERY = gql`
     query DetailPodcast($input: GetPodcastInput!) {
         getPodcastOne(input: $input) {
             error
