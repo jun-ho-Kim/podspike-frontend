@@ -1,7 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 import React  from 'react';
 import { Link } from "react-router-dom";
-import { getPodcast_Query, getPodcast_Query_getPodcast } from "../__generated__/getPodcast_Query";
+import { getPodcast_Query } from "../__generated__/getPodcast_Query";
 
 
 const GETPODCAST_QUERY = gql`

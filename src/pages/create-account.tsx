@@ -1,7 +1,8 @@
 import { useMutation, gql } from "@apollo/client";
 import React  from "react";
+import { HelmetProvider } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button } from "../components/button";
 import { FormError } from "../components/form-error";
@@ -17,7 +18,7 @@ interface IFormProps {
 
 }
 
-const CREATEACCOUNT = gql`
+export const CREATEACCOUNT = gql`
     mutation createAccountMutation($createAccountInput: CreateAccountInput!) {
         createAccount(input: $createAccountInput) {
             ok
@@ -41,7 +42,7 @@ export const CreateAccount = () => {
         } = data;
         try {
             if(ok) {
-                alert('Success Create Account')
+                alert('회원가입에 성공했습니다.')
                 history.push('/')
 
             }
@@ -67,6 +68,9 @@ export const CreateAccount = () => {
     }
     return (
         <div className="w-screen h-screen min-w-max flex justify-center items-center font-mono">
+            <HelmetProvider>
+                <title>회원가입 | Podspike</title>
+            </HelmetProvider>
             <div className=''>
             <h1
                 className='mb-8 text-2xl font-bold text-center'
@@ -78,7 +82,7 @@ export const CreateAccount = () => {
                 <input
                     className="border font-bold border-gray-400 rounded-md py-3 px-5 focus:ring-1 focus:ring-black focus:ring-offset-1 focus:ring-offset-gray-500 focus:ring-opacity-80 outline-none transition duration-500"
                     ref={register({
-                        required: "Email is required",
+                        required: "이메일을 입력해주세요",
                         pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s  @"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                     })}
                     name="email"
@@ -87,11 +91,11 @@ export const CreateAccount = () => {
                     size={27}
                 />
                 {errors.email?.message && <FormError error={errors.email?.message} />}
-                {errors.email?.type === "pattern" && <FormError error="Please enter a valid email" />}
+                {errors.email?.type === "pattern" && <FormError error="이메일을 입력해주세요" />}
                 <input
                     className="border font-bold border-gray-400 rounded-md py-3 px-5 focus:ring-1 focus:ring-black focus:ring-offset-1 focus:ring-offset-gray-500 focus:ring-opacity-80 outline-none transition duration-500"
                     ref={register({
-                            required: "비밀번호를 입력하세요.",
+                            required: "비밀번호를 입력하세요",
                             minLength: {
                                 value: 5,
                                 message: '비밀번호는 5자리 이상 입력해야 합니다.'
@@ -111,7 +115,7 @@ export const CreateAccount = () => {
                 <input
                     className='border font-bold border-gray-400 rounded-md py-3 px-5 focus:ring-1 focus:ring-black focus:ring-offset-1 focus:ring-offset-gray-500 focus:ring-opacity-80 outline-none transition duration-500'
                     ref={register({
-                        required: "Password Confirm is required",
+                        required: "비밀번호를 입력하세요",
                         validate: (v) => {
                             if(v !== getValues().password) {
                                 return "비밀번호가 일치하지 않습니다."
@@ -122,7 +126,7 @@ export const CreateAccount = () => {
                     maxLength={16}
                     name="passwordConfirm"
                     type="password"
-                    placeholder="비밀번호 확인"
+                    placeholder="비밀번호확인"
                 />
                 {errors.passwordConfirm?.message && <FormError error={errors.passwordConfirm?.message} />}
                 <select
