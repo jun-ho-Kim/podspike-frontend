@@ -102,8 +102,8 @@ describe('<CreateAccount />', () => {
         expect(mockpush).toHaveBeenCalledWith("/")
         const multationError = getByRole("alert");
         expect(multationError).toHaveTextContent("error");
-        afterAll(() => {
-            jest.clearAllMocks();
-        })
     });
+    afterAll(() => {
+        jest.clearAllMocks();
+    })
 })

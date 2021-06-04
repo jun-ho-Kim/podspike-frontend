@@ -1,10 +1,11 @@
 import { gql, useQuery } from "@apollo/client";
 import React  from 'react';
+import { HelmetProvider } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { getPodcast_Query } from "../__generated__/getPodcast_Query";
 
 
-const GETPODCAST_QUERY = gql`
+export const GETPODCAST_QUERY = gql`
     query getPodcast_Query {
         getPodcast {
             error
@@ -22,23 +23,14 @@ const GETPODCAST_QUERY = gql`
 
 
 export const Home = () =>  {
-    const onCompleted = (data: getPodcast_Query) => {
-        const {getPodcast: {ok, error, podcast}} = data;
-        if(ok) {
-            console.log("podcast", podcast)
-        } else {
-            alert(error);
-        }
-    }
-
-
     const {data, loading, error} = useQuery(GETPODCAST_QUERY, {
-        onCompleted
     });
-    // const {getPodcast: {podcast}} = data;
-        console.log("Get Podcasts,", data)
+    console.log("DATA", data)
     return (
         <div className='w-max m-3' >
+            <HelmetProvider>
+                <title>홈 | Podspike</title>
+            </HelmetProvider>
             {loading ? "Loading..." : (
             <>
             <h1 className='font-semibold mb-3'>신규 팟캐스트</h1>
