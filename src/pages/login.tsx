@@ -7,13 +7,14 @@ import { authTokenVar, isLoggedInVar } from '../apollo';
 import { Button } from '../components/button';
 import { Link } from 'react-router-dom';
 import { FormError } from '../components/form-error';
+import { Helmet } from 'react-helmet-async';
 
 interface IFormProps {
     email: string;
     password: string;
 }
 
-const LOGIN_MUTATION = gql`
+export const LOGIN_MUTATION = gql`
 mutation loginMutation($loginInput: LoginInput!) {
     login(input: $loginInput) {
         ok
@@ -41,7 +42,9 @@ const onCompleted = (data: loginMutation) => {
 
 
 export const Login = () => {
-    const {register, getValues, errors, handleSubmit, formState} = useForm<IFormProps>();
+    const {register, getValues, errors, handleSubmit, formState} = useForm<IFormProps>({
+        mode: "onChange"
+    });
     const {email, password} = getValues();
     const [loginMutaion, {data: loginResult, loading}] = useMutation<loginMutation, loginMutationVariables>(LOGIN_MUTATION, {
         onCompleted,
@@ -55,6 +58,7 @@ export const Login = () => {
 
     return (
         <div className={'min-h-screen flex items-center justify-center text-black'}>
+            <Helmet><title>login | Podspike</title></Helmet>
             <div>
             <h1
                 className='mb-8 text-2xl font-bold text-center'
@@ -66,12 +70,16 @@ export const Login = () => {
             >  
                 <input
                     className="border font-bold border-gray-400 rounded-md py-3 px-5 focus:ring-1 focus:ring-black focus:ring-offset-1 focus:ring-offset-gray-500 focus:ring-opacity-80 outline-none transition duration-500"
-                    ref={register({required: "이메일을 입력해주세요."})}
+                    ref={
+                        register({required: "이메일을 입력해주세요",
+                        pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                    })}
                     name="email"
                     type="email"
                     placeholder="이메일"
                     size={27}
                 />
+                {errors.email?.type === "pattern" && (<FormError error={"이메일을 입력해주세요"} /> )}
                 {errors.email?.message && <FormError error={errors.email?.message}/>}
                 <input
                     className="border font-bold border-gray-400 rounded-md py-3 px-5 focus:ring-1 focus:ring-black focus:ring-offset-1 focus:ring-offset-gray-500 focus:ring-opacity-80 outline-none transition duration-500"
@@ -92,7 +100,7 @@ export const Login = () => {
                     placeholder="비밀번호"
                 />
                 {errors.password?.message && <FormError error={errors.password?.message}/>}
-                <Button 
+                <Button
                     canClick={formState.isValid}
                     text="로그인"
                     loading={loading}
