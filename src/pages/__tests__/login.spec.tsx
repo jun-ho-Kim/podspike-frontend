@@ -79,11 +79,11 @@ describe("<Login />", () => {
         });
         mockedClient.setRequestHandler(LOGIN_MUTATION, mockedMutationResponse);
         jest.spyOn(Storage.prototype, "setItem");
-        await waitFor(() => {{
+        await waitFor(() => {
             userEvent.type(email, formData.email);
             userEvent.type(password, formData.password);
             userEvent.click(submitBtn);
-        }})
+        })
         expect(mockedMutationResponse).toHaveBeenCalledTimes(1);
         expect(mockedMutationResponse).toHaveBeenCalledWith({
            "loginInput": {

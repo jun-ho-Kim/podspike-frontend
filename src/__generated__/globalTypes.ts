@@ -26,6 +26,13 @@ export interface CreateAccountInput {
   playedLists?: EpisodeInput[] | null;
 }
 
+export interface CreatePodcastInput {
+  title: string;
+  category: string;
+  description?: string | null;
+  thumbnail?: string | null;
+}
+
 export interface EpisodeInput {
   title: string;
   category: string;
@@ -55,11 +62,26 @@ export interface PodcastInput {
   reviews?: ReviewInput[] | null;
 }
 
+export interface PodcastSearchInput {
+  id: number;
+}
+
 export interface ReviewInput {
   title: string;
   text: string;
   creator: UserInputType;
   podcast: PodcastInput;
+}
+
+export interface UpdatePodcastInput {
+  id: number;
+  createdAt?: any | null;
+  updateAt?: any | null;
+  title?: string | null;
+  category?: string | null;
+  rating?: number | null;
+  user?: UserInputType | null;
+  reviews?: ReviewInput[] | null;
 }
 
 export interface UserInputType {

@@ -7,7 +7,7 @@ import { authTokenVar, isLoggedInVar } from '../apollo';
 import { Button } from '../components/button';
 import { Link } from 'react-router-dom';
 import { FormError } from '../components/form-error';
-import { Helmet } from 'react-helmet-async';
+import { Helmet } from 'react-helmet';
 
 interface IFormProps {
     email: string;

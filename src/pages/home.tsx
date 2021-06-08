@@ -1,6 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 import React  from 'react';
-import { HelmetProvider } from "react-helmet-async";
+import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { getPodcast_Query } from "../__generated__/getPodcast_Query";
 
@@ -21,16 +21,15 @@ export const GETPODCAST_QUERY = gql`
     }
 `;
 
-
 export const Home = () =>  {
     const {data, loading, error} = useQuery(GETPODCAST_QUERY, {
     });
     console.log("DATA", data)
     return (
         <div className='w-max m-3' >
-            <HelmetProvider>
+            <Helmet>
                 <title>홈 | Podspike</title>
-            </HelmetProvider>
+            </Helmet>
             {loading ? "Loading..." : (
             <>
             <h1 className='font-semibold mb-3'>신규 팟캐스트</h1>

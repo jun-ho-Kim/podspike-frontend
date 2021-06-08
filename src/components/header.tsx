@@ -1,11 +1,17 @@
 import React, { useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { useMe } from './hooks/useMe';
+
+interface IParam {
+    id: string;
+}
 
 export const Header = () => {
     const {pathname} = useLocation();
     const {data, loading, error} = useMe();
-    useEffect(() => {
+    const {id} = useParams<IParam>();
+    const ParseId = parseInt(id);
+;    useEffect(() => {
         console.log("me", data);
     }, [])
     return (
@@ -29,6 +35,10 @@ export const Header = () => {
                     </li>
                     <li>
                         {data && !loading && <span>{data?.me.email}</span>}
+                    </li>
+                    <li>
+                        <Link to="create-podcast">방송 생성</Link>
+                        <Link to={`/${ParseId}/update-podcast}`}>방송 수정</Link>
                     </li>
                 </ul>
             </div>

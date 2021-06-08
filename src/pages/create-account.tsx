@@ -1,6 +1,6 @@
 import { useMutation, gql } from "@apollo/client";
 import React  from "react";
-import { HelmetProvider } from "react-helmet-async";
+import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -44,7 +44,6 @@ export const CreateAccount = () => {
             if(ok) {
                 alert('회원가입에 성공했습니다.')
                 history.push('/')
-
             }
         } catch(error) {
             console.log(error);
@@ -68,9 +67,9 @@ export const CreateAccount = () => {
     }
     return (
         <div className="w-screen h-screen min-w-max flex justify-center items-center font-mono">
-            <HelmetProvider>
+            <Helmet>
                 <title>회원가입 | Podspike</title>
-            </HelmetProvider>
+            </Helmet>
             <div className=''>
             <h1
                 className='mb-8 text-2xl font-bold text-center'
