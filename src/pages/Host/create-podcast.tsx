@@ -6,7 +6,7 @@ import axios from 'axios'
 import { createPodcastMutation } from "../../__generated__/createPodcastMutation";
 import { useHistory } from "react-router";
 import { GETPODCAST_QUERY } from '../home'
-import { categories } from "../categories";
+import { categoryList } from "../categories";
 
 const CREATE_PODCAST_MUTATION = gql`
     mutation createPodcastMutation($input: CreatePodcastInput!) {
@@ -132,7 +132,7 @@ export const CreatePodcast = () => {
                     name="category" 
                     placeholder="카테고리"
                 >
-                    {categories.map((category, index) => (
+                    {categoryList.map((category, index) => (
                         <option key={index}>{category}</option>
                     ))}
                 </select>

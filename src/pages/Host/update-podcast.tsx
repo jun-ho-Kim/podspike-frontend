@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import { Button } from "../../components/button";
 import { updatePodcast } from "../../__generated__/updatePodcast";
-import { categories } from "../categories";
+import { categoryList } from "../categories";
 
 const UPDATEPODCAST_MUTATION = gql`
     mutation updatePodcast($input: UpdatePodcastInput!) {
@@ -82,7 +82,7 @@ export const UpdatePodcast = () => {
                     name="category"
                 >
                 
-                {categories.map((category, index) => (
+                {categoryList.map((category, index) => (
                     <option key={index}>{category}</option>
 
                 ))}

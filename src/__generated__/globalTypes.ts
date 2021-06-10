@@ -12,6 +12,12 @@ export enum UserRole {
   Listener = "Listener",
 }
 
+export interface CategoriesInput {
+  page?: number | null;
+  category: string;
+  takeNumber?: number | null;
+}
+
 export interface CreateAccountInput {
   id?: number | null;
   createdAt?: any | null;
@@ -24,6 +30,14 @@ export interface CreateAccountInput {
   subscriptions?: PodcastInput[] | null;
   reviews?: ReviewInput[] | null;
   playedLists?: EpisodeInput[] | null;
+}
+
+export interface CreateEpisodeInput {
+  id: number;
+  title: string;
+  category: string;
+  description: string;
+  episodeImg?: string | null;
 }
 
 export interface CreatePodcastInput {
@@ -40,6 +54,10 @@ export interface EpisodeInput {
   episodeImg?: string | null;
   podcast: PodcastInput;
   player: UserInputType;
+}
+
+export interface GetEpisodeInput {
+  id: number;
 }
 
 export interface GetPodcastInput {
@@ -74,14 +92,14 @@ export interface ReviewInput {
 }
 
 export interface UpdatePodcastInput {
-  id: number;
+  id?: number | null;
   createdAt?: any | null;
   updateAt?: any | null;
   title?: string | null;
   category?: string | null;
-  rating?: number | null;
+  description?: string | null;
+  thumbnail?: string | null;
   user?: UserInputType | null;
-  reviews?: ReviewInput[] | null;
 }
 
 export interface UserInputType {

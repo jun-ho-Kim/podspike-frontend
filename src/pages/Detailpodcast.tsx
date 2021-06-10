@@ -64,6 +64,9 @@ export const Podcast = () => {
                         </Link>
                         <Link to={`${id}/delete-podcast`}>삭제</Link>
                         <UpdatePodcast/>
+
+                        <Link to={`/${id}/episodes`}>에피소드</Link>
+                        <Link to={`/${id}/create-episode`}>에피소드 추가</Link>
                     </div>
                 }
                 </div>
