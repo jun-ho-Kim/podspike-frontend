@@ -2,6 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { isLoggedInVar } from '../apollo';
 import { Header } from '../components/header';
+import { SearchPodcast } from '../components/searchPodcast';
+import { SearchPodcastForm } from '../components/searchPodcastForm';
 import { LOCALSTORAGE_TOKEN } from '../constants';
 import { Categories } from '../pages/categories';
 import { Podcast } from '../pages/Detailpodcast';
@@ -24,6 +26,9 @@ export const LoggedInRouter = () => {
                 <Route exact path='/'>
                     <Home />
                 </Route>
+                <Route exact path='/search'>
+                    <SearchPodcast />
+                </Route>
                 <Route exact path='/categories'>
                     <Categories />
                 </Route>
@@ -44,7 +49,7 @@ export const LoggedInRouter = () => {
                 </Route>          
                 <Route exact path='/:id/episodes'>
                     <Episodes />
-                </Route>         
+                </Route>
             </Switch>
             <div className={'flex items-center justify-center absolute top-0 right-0'}>
                 <span onClick={handleOnClick}

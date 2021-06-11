@@ -7,7 +7,8 @@ export const authTokenVar = makeVar(token);
 export const isLoggedInVar = makeVar(Boolean(token));
 
 const httpLink = createHttpLink({
-    uri: 'https://podspike.herokuapp.com/graphql'
+    // uri: 'https://podspike.herokuapp.com/graphql'
+    uri: 'http://localhost:5000/graphql'
 });
 
 const authLink = setContext((_, { headers }) => {

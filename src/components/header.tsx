@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { useMe } from './hooks/useMe';
+import { SearchPodcastForm } from './searchPodcastForm';
 
 interface IParam {
     id: string;
@@ -32,6 +33,9 @@ export const Header = () => {
                     </li>
                     <li className={`${pathname === '/subscription' && 'text-blue-600 font-semibold'}`}>
                         <Link to='/subscription'>구독</Link>
+                    </li>
+                    <li>
+                        <SearchPodcastForm />
                     </li>
                     <li>
                         {data && !loading && <span>{data?.me.email}</span>}

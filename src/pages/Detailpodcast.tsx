@@ -1,9 +1,12 @@
 import { gql, useQuery } from "@apollo/client";
 import React from 'react';
 import { Link, useParams } from "react-router-dom";
+import { Subscribe } from "../components/subscribe";
+import { Subscriptions } from "../components/subscriptions";
 import { DetailPodcast, DetailPodcastVariables } from "../__generated__/DetailPodcast";
 import {CreatePodcast} from "./Host/create-podcast"
 import { UpdatePodcast } from "./Host/update-podcast";
+import { CreateReview } from "./Listener/create-review";
 
 export const PODCAST_QUERY = gql`
     query DetailPodcast($input: GetPodcastInput!) {
@@ -64,9 +67,11 @@ export const Podcast = () => {
                         </Link>
                         <Link to={`${id}/delete-podcast`}>삭제</Link>
                         <UpdatePodcast/>
-
+                        <Subscribe />
+                        <Subscriptions />
                         <Link to={`/${id}/episodes`}>에피소드</Link>
                         <Link to={`/${id}/create-episode`}>에피소드 추가</Link>
+                        <CreateReview />
                     </div>
                 }
                 </div>

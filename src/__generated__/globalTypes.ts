@@ -47,6 +47,12 @@ export interface CreatePodcastInput {
   thumbnail?: string | null;
 }
 
+export interface CreateReviewInput {
+  title: string;
+  text: string;
+  podcastId: number;
+}
+
 export interface EpisodeInput {
   title: string;
   category: string;
@@ -89,6 +95,15 @@ export interface ReviewInput {
   text: string;
   creator: UserInputType;
   podcast: PodcastInput;
+}
+
+export interface SearchPodcastInput {
+  page?: number | null;
+  query: string;
+}
+
+export interface SubscribeInput {
+  podcastId: number;
 }
 
 export interface UpdatePodcastInput {

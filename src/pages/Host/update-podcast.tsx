@@ -84,7 +84,6 @@ export const UpdatePodcast = () => {
                 
                 {categoryList.map((category, index) => (
                     <option key={index}>{category}</option>
-
                 ))}
                 </select>
                 <Button canClick={formState.isValid} loading={loading} text="text" />
