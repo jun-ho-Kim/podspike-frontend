@@ -1,5 +1,5 @@
 module.exports = {
-  purge: [],
+  purge: ["./src/**/*.tsx","./src/**/*.jsx"],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {},

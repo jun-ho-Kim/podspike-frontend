@@ -6,7 +6,7 @@ import { Subscriptions } from "../components/subscriptions";
 import { DetailPodcast, DetailPodcastVariables } from "../__generated__/DetailPodcast";
 import {CreatePodcast} from "./Host/create-podcast"
 import { UpdatePodcast } from "./Host/update-podcast";
-import { CreateReview } from "./Listener/create-review";
+// import { CreateReview } from "./Listener/create-review";
 
 export const PODCAST_QUERY = gql`
     query DetailPodcast($input: GetPodcastInput!) {
@@ -71,7 +71,7 @@ export const Podcast = () => {
                         <Subscriptions />
                         <Link to={`/${id}/episodes`}>에피소드</Link>
                         <Link to={`/${id}/create-episode`}>에피소드 추가</Link>
-                        <CreateReview />
+                        {/* <CreateReview /> */}
                     </div>
                 }
                 </div>
