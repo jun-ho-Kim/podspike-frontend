@@ -3,7 +3,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "../../components/button";
 
-export const CREATEREVIEWMUTATION = gql`
+export const CREATEREVIEW_MUTATION = gql`
     mutation createReviewMutation($input: CreateReviewInput!) {
         createReview(input: $input) {
             ok
@@ -14,6 +14,10 @@ export const CREATEREVIEWMUTATION = gql`
 
 export const CreateReview = () => {
     const {register, getValues, formState, handleSubmit} = useForm();
+    const [createReviewMutaion ,{data, loading, error}] = useMutation(CREATEREVIEW_MUTATION, {
+        
+    });
+    console.log("createReview data", data)
     
     return (
         <div>
