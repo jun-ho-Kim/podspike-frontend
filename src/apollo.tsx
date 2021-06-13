@@ -9,6 +9,7 @@ export const isLoggedInVar = makeVar(Boolean(token));
 const httpLink = createHttpLink({
     uri: process.env.NODE_ENV ==="production"
     ? 'https://podspike.herokuapp.com/graphql': 
+    // 'https://podspike.herokuapp.com/graphql'
     'http://localhost:5000/graphql'
 });
 

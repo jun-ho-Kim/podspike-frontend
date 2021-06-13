@@ -22,6 +22,8 @@ export interface CreateAccountInput {
   id?: number | null;
   createdAt?: any | null;
   updateAt?: any | null;
+  nickName?: string | null;
+  profilePhoto?: string | null;
   email?: string | null;
   password?: string | null;
   passwordConfirm?: string | null;
@@ -62,6 +64,10 @@ export interface EpisodeInput {
   player: UserInputType;
 }
 
+export interface GetEpisodeDetailInput {
+  id: number;
+}
+
 export interface GetEpisodeInput {
   id: number;
 }
@@ -100,6 +106,7 @@ export interface ReviewInput {
 export interface SearchPodcastInput {
   page?: number | null;
   query: string;
+  takeNumber?: number | null;
 }
 
 export interface SubscribeInput {
@@ -118,6 +125,8 @@ export interface UpdatePodcastInput {
 }
 
 export interface UserInputType {
+  nickName: string;
+  profilePhoto: string;
   email: string;
   password: string;
   passwordConfirm: string;

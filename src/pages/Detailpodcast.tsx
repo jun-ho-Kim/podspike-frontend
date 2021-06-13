@@ -4,9 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { Subscribe } from "../components/subscribe";
 import { Subscriptions } from "../components/subscriptions";
 import { DetailPodcast, DetailPodcastVariables } from "../__generated__/DetailPodcast";
-import {CreatePodcast} from "./Host/create-podcast"
-import { UpdatePodcast } from "./Host/update-podcast";
-// import { CreateReview } from "./Listener/create-review";
+import { EpisodeList } from "./episodeList";
 
 export const PODCAST_QUERY = gql`
     query DetailPodcast($input: GetPodcastInput!) {
@@ -19,6 +17,10 @@ export const PODCAST_QUERY = gql`
                 category
                 description
                 thumbnail
+                episodes {
+                    id
+                    title
+                }
             }
         }
     }
@@ -57,20 +59,26 @@ export const Podcast = () => {
                 <div className=' '>
                 {data?.getPodcastOne.podcast &&
                     <div className='flex flex-col justify-center items-center'>
-                        <div style={{backgroundImage: `url(${data?.getPodcastOne.podcast.thumbnail})`}} className='bg-cover bg-center px-28 py-14'  />
-                        <h3>{data?.getPodcastOne.podcast.title}</h3>
-                        <span>{data?.getPodcastOne.podcast.category}</span>
-                        <span className='text-xs'>{data?.getPodcastOne.podcast.description}</span>
+                        <div className='flex flex-rows'>
+                            <div style={{backgroundImage: `url(${data?.getPodcastOne.podcast.thumbnail})`}} className='bg-cover bg-center px-28 py-14'  />
+                                <div className='flex flex-col ml-7'>
+                                    <span className='text-blue-500 font-semibold'># {data?.getPodcastOne.podcast.category}</span>
+                                    <h3 className='text-xl font-semibold'>{data?.getPodcastOne.podcast.title}</h3>
+                                    <span className='text-base mt-8'>{data?.getPodcastOne.podcast.description}</span>
+                                    <Subscribe />
+                                    <Link to={`/${id}/create-episode`}>에피소드 추가</Link>
+                            </div>
+                        </div>
                         <h2 className='text-2xl mt-10'>Episodes</h2>
+                        <EpisodeList />
                         <Link to={`${id}/update-podcast`}>
                             수정
                         </Link>
                         <Link to={`${id}/delete-podcast`}>삭제</Link>
-                        <UpdatePodcast/>
-                        <Subscribe />
+                        
                         <Subscriptions />
                         <Link to={`/${id}/episodes`}>에피소드</Link>
-                        <Link to={`/${id}/create-episode`}>에피소드 추가</Link>
+                        
                         {/* <CreateReview /> */}
                     </div>
                 }

@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from 'react-router-dom';
 import { Button } from "../../components/button";
-import { deletePodcastMutation } from "../../__generated__/deletePodcastMutation";
 import { getPodcastQuery } from "../../__generated__/getPodcastQuery";
 
 interface IParam {
@@ -93,10 +92,10 @@ export const DeletePodcast = () => {
     
     
     const handleOnSubmit = async (event: any) => {
-        // setThumbanil(thumbnail)
         event.preventDefault();
+        deletePodcast();
         try {
-            await axios.delete(`http://localhost:4000/uploads`, {
+            await axios.delete(`http://localhost:5000/uploads`, {
                 data: fileUrl
             })
             .then(response => {
@@ -117,11 +116,11 @@ export const DeletePodcast = () => {
             // .then(error => {
             //     console.log("error",error)
             // })
-    
+            
         } catch(error) {
             console.log("delete error", error);
         } finally {
-            history.push("/")
+            history.push("/");
         }
     }
     return(

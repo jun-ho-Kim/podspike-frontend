@@ -7,12 +7,13 @@ import { SearchPodcastForm } from '../components/searchPodcastForm';
 import { LOCALSTORAGE_TOKEN } from '../constants';
 import { Categories } from '../pages/categories';
 import { Podcast } from '../pages/Detailpodcast';
-import { Episodes } from '../pages/episodes';
+import { EpisodeList } from '../pages/episodeList';
 import Home from '../pages/home';
 import { CreateEpisode } from '../pages/Host/create-episode';
 import { CreatePodcast } from '../pages/Host/create-podcast';
 import { DeletePodcast } from '../pages/Host/delete-podcast';
 import { UpdatePodcast } from '../pages/Host/update-podcast';
+import { DetailEpisode } from '../pages/episode';
 
 export const LoggedInRouter = () => {
     const handleOnClick = () => {
@@ -47,8 +48,8 @@ export const LoggedInRouter = () => {
                 <Route exact path='/:id/delete-podcast'>
                     <DeletePodcast />
                 </Route>          
-                <Route exact path='/:id/episodes'>
-                    <Episodes />
+                <Route exact path='/:id/episodes/:episodeId'>
+                    <DetailEpisode />
                 </Route>
             </Switch>
             <div className={'flex items-center justify-center absolute top-0 right-0'}>

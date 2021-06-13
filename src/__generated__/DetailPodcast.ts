@@ -9,6 +9,12 @@ import { GetPodcastInput } from "./globalTypes";
 // GraphQL query operation: DetailPodcast
 // ====================================================
 
+export interface DetailPodcast_getPodcastOne_podcast_episodes {
+  __typename: "Episode";
+  id: number;
+  title: string;
+}
+
 export interface DetailPodcast_getPodcastOne_podcast {
   __typename: "Podcast";
   id: number;
@@ -16,6 +22,7 @@ export interface DetailPodcast_getPodcastOne_podcast {
   category: string;
   description: string | null;
   thumbnail: string | null;
+  episodes: DetailPodcast_getPodcastOne_podcast_episodes[] | null;
 }
 
 export interface DetailPodcast_getPodcastOne {

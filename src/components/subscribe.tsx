@@ -40,7 +40,10 @@ export const Subscribe = () => {
 
     return (
         <div>
-            <button onClick={handleOnClick}>{ToggleSubscribe? "구독" : "구독 취소"}</button>
+            <button 
+                className="bg-blue-500 px-6 py-2 rounded-3xl text-white mt-2"
+                onClick={handleOnClick}
+            >{ToggleSubscribe? "+ 구독" : "구독 중"}</button>
         </div>
     )
 }

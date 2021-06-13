@@ -70,7 +70,6 @@ export const CreatePodcast = () => {
                     setThumbnail(response.data.url);
                 } else {
                     console.log("error", error);
-
                 }
             })
             )

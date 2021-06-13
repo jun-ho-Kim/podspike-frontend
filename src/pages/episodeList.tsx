@@ -1,6 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 import React from 'react';
 import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 import { getEpisode } from "../__generated__/getEpisode";
 
 export const GETEPISODE_QUERY = gql`
@@ -22,7 +23,7 @@ interface IParam {
     id: string;
 }
 
-export const Episodes = () => {
+export const EpisodeList = () => {
 
     const {id} = useParams<IParam>();
     const onCompleted = () => {
@@ -44,7 +45,9 @@ export const Episodes = () => {
             <h4>episode</h4>
             {data?.getAllEpisode.episodes &&  data?.getAllEpisode.episodes.map((episode: any, index: number) => (
                 <div>
-                    <h4>{episode.title}</h4>
+                    <Link to={`${id}/episodes/${episode.id}`}>
+                        <h4>{episode.title}</h4>
+                    </Link>
                 </div>
             ))}
         </div>

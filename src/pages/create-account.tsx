@@ -15,6 +15,7 @@ interface IFormProps {
     password: string;
     passwordConfirm: string;
     role: UserRole;
+    nickName: string;
 
 }
 
@@ -34,7 +35,7 @@ export const CreateAccount = () => {
         mode: "onChange",
         
     })
-    const {email, password, passwordConfirm, role} = getValues();
+    const {email, nickName, password, passwordConfirm, role} = getValues();
     const onCompleted = (data: createAccountMutation) => {
         console.log("onCompleted", data);
         const {
@@ -56,6 +57,7 @@ export const CreateAccount = () => {
         variables : {
             createAccountInput: {
                 email,
+                nickName,
                 password,
                 passwordConfirm,
                 role,
@@ -91,6 +93,17 @@ export const CreateAccount = () => {
                 />
                 {errors.email?.message && <FormError error={errors.email?.message} />}
                 {errors.email?.type === "pattern" && <FormError error="이메일을 입력해주세요" />}
+                <input
+                    className="border font-bold border-gray-400 rounded-md py-3 px-5 focus:ring-1 focus:ring-black focus:ring-offset-1 focus:ring-offset-gray-500 focus:ring-opacity-80 outline-none transition duration-500"
+                    ref={register({
+                        required: "닉네임을 입력해주세요."
+                    })}
+                    name="nickName"
+                    type="text"
+                    placeholder="닉네임"
+                />
+                {errors.nickName?.message && <FormError error={errors.nickName?.message} />}
+                {errors.nickName?.type === "pattern" && <FormError error="닉네임을 입력해주세요" />}                
                 <input
                     className="border font-bold border-gray-400 rounded-md py-3 px-5 focus:ring-1 focus:ring-black focus:ring-offset-1 focus:ring-offset-gray-500 focus:ring-opacity-80 outline-none transition duration-500"
                     ref={register({
