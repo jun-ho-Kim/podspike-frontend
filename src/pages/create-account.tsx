@@ -75,7 +75,7 @@ export const CreateAccount = () => {
             <div className=''>
             <h1
                 className='mb-8 text-2xl font-bold text-center'
-            >Create Account</h1>
+            >회원가입</h1>
             <form
                 className='grid gap-6 '
                 onSubmit={handleSubmit(handleOnSubmit)}

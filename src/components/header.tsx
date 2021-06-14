@@ -38,7 +38,10 @@ export const Header = () => {
                         <SearchPodcastForm />
                     </li>
                     <li>
-                        {data && !loading && <span>{data?.me.email}</span>}
+                        <div className='flex '>
+                            <div className='w-8 h-8 bg-gray-300 rounded-full mr-3'  />
+                            <span>{data && !loading && <span>{data?.me.email}</span>}</span>
+                        </div>
                     </li>
                     <li>
                         <Link to="create-podcast">방송 생성</Link>

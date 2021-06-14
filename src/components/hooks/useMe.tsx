@@ -7,6 +7,8 @@ export const MEQUERY = gql`
         me {
             id
             email
+            nickName
+            profilePhoto
             role 
         }
     }

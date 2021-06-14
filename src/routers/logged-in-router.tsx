@@ -14,6 +14,8 @@ import { CreatePodcast } from '../pages/Host/create-podcast';
 import { DeletePodcast } from '../pages/Host/delete-podcast';
 import { UpdatePodcast } from '../pages/Host/update-podcast';
 import { DetailEpisode } from '../pages/episode';
+import { EditProfile } from '../pages/edit-profile';
+
 
 export const LoggedInRouter = () => {
     const handleOnClick = () => {
@@ -35,6 +37,9 @@ export const LoggedInRouter = () => {
                 </Route>
                 <Route exact path='/create-podcast'>
                     <CreatePodcast />
+                </Route>
+                <Route exact path='/edit-profile'>
+                    <EditProfile />
                 </Route>
                 <Route exact path='/:id/create-episode'>
                     <CreateEpisode />

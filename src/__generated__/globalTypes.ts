@@ -55,6 +55,14 @@ export interface CreateReviewInput {
   podcastId: number;
 }
 
+export interface EditProfileInput {
+  nickName?: string | null;
+  profilePhoto?: string | null;
+  email?: string | null;
+  password?: string | null;
+  role?: UserRole | null;
+}
+
 export interface EpisodeInput {
   title: string;
   category: string;
