@@ -1,5 +1,6 @@
 import { useMutation, gql, useQuery, useLazyQuery } from "@apollo/client";
 import React, { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
 import { categories } from "../__generated__/categories";
 
 export const categoryList = [
@@ -29,6 +30,9 @@ const CATEGORIES_QUERY = gql`
             podcasts {
                 id
                 title
+                thumbnail
+                description
+                updateAt
             }
         }
     }
@@ -58,7 +62,7 @@ export const Categories = () => {
 
     useEffect(() => {
             categoriesQuery();
-    }, [updateCategory])
+    }, [currentCategory])
     console.log("current cate", currentCategory)
     console.log("current data", data)
 
@@ -74,9 +78,9 @@ export const Categories = () => {
         }
     }
     return (
-        <>
-            <div>
-                <div className="flex mt-12">
+            <div className='sm:max-w-sm lg:max-w-full flex flex-col items-center'>
+                <h1 className='text-3xl font-bold mt-6'>카테고리</h1>
+                <div className=" flex mt-12 lg:flex-row sm:flex-col">
                 {categoryList.map((category, index) => 
                     <div
                     className=""
@@ -89,13 +93,37 @@ export const Categories = () => {
                     )}
                 </div>
                     {loading ? "Loading... " : (
-                    <div className='mt-12 ml-6'>
-                    {data?.categories.podcasts && data.categories.podcasts.map((podcast: any, index: number) => (
-                        <span className="w-max h-screen mr-3">{podcast.title}</span>
+                <div className='flex flex-col items-start'>
+                    <span className='mt-12 text-lg    flex font-semibold'>채널 
+                        <p className='text-blue-400 ml-2'> {data?.categories.podcasts?.length}</p>
+                    </span>
+                    <div className='mt-8 grid lg:grid-cols-2 gap-x-44 gap-y-6 sm:flex-col '>
+                    {data?.categories.podcasts && data.categories.podcasts.map((podcast, index) => (
+                        <div className='flex'>
+                            <Link 
+                                className="flex justify-items-stretch" 
+                                to={`/${podcast.id}`}>
+                                <div 
+                                    className='w-24 h-24 bg-center bg-cover rounded-lg'
+                                    style={{backgroundImage: `url(${podcast.thumbnail})`}}
+                                />
+                                <div className="ml-7">
+                                    <h3 className="text-lg font-semibold">{podcast.title}</h3>
+                                    <p className="text-sm text-gray-400">
+                                        {podcast.description && podcast.description.length >35 ? 
+                                        `${podcast.description.substring(0,35)}...` : podcast.description}
+                                    </p>
+                                    <span 
+                                        className='text-sm font-medium text-gray-700'
+                                    
+                                    >{podcast.updateAt.substring(0,10).replace(/-/g, ".")}</span>
+                                </div>
+                            </Link>
+                        </div>
                     ))}
+                </div>
                     </div>
                     )}
             </div>
-    </>
     )
 }

@@ -60,6 +60,7 @@ export interface EditProfileInput {
   profilePhoto?: string | null;
   email?: string | null;
   password?: string | null;
+  passwordConfirm?: string | null;
   role?: UserRole | null;
 }
 
@@ -96,7 +97,7 @@ export interface PodcastInput {
   rating: number;
   thumbnail?: string | null;
   episodes?: EpisodeInput[] | null;
-  user: UserInputType;
+  host: UserInputType;
   reviews?: ReviewInput[] | null;
 }
 
@@ -129,7 +130,7 @@ export interface UpdatePodcastInput {
   category?: string | null;
   description?: string | null;
   thumbnail?: string | null;
-  user?: UserInputType | null;
+  host?: UserInputType | null;
 }
 
 export interface UserInputType {

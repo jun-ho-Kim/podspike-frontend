@@ -13,8 +13,8 @@ export interface getEpisode_getAllEpisode_episodes {
   __typename: "Episode";
   id: number;
   title: string;
-  description: string;
   episodeImg: string | null;
+  createdAt: any;
 }
 
 export interface getEpisode_getAllEpisode {

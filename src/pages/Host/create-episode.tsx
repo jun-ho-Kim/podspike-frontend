@@ -1,6 +1,6 @@
 import { useMutation, gql } from "@apollo/client";
 import axios from "axios";
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import { Button } from "../../components/button";
@@ -20,6 +20,7 @@ interface IParam {
 
 export const CreateEpisode = () => {
     const {id} = useParams<IParam>();
+    const [file, setFile] = useState();
     const history = useHistory();
     const { register, getValues, formState, handleSubmit } = useForm({
         mode: "onChange",
@@ -38,7 +39,9 @@ export const CreateEpisode = () => {
                 title,
                 description,
                 category: "null",
-                episodeImg: "null"
+                episodeImg: "null",
+                audioFile: file
+                
             }
 
         }
@@ -46,20 +49,25 @@ export const CreateEpisode = () => {
     console.log("data", data);
     
     const handleOnSubmit = async () => {
-        const file = audioFile[0]
-        const formData = new FormData()
-        formData.append("file", file);
-        await axios.post('https://podspike.herokuapp.com/uploads/audio', formData)
-        .then(response => {
-            console.log("response", response)
-            if(response) {
-
-            }
-        })
-        console.log("audioFile", audioFile)
-        console.log("file", file)
-        createEpisode();
-    }
+        // if(audioFile && audioFile.length > 0) {
+        //     const file = audioFile[0]
+        //     const formBody = new FormData()
+        //     formBody.append("file", file);
+        //     console.log("audio file", file);
+        //     console.log("audio FormBody", formBody);
+        //     await axios.post('http://localhost:5000/uploads/audio', formBody)
+        //     .then(response => {
+        //         console.log("response", response)
+        //         if(response) {
+        //             setFile(response.data.url);
+        //             console.log("response.data.url", response.data.url);
+        //         } else {
+        //             console.log("error", error);
+        //         }
+        //     })
+            createEpisode();
+        }
+        }
     return (
         <div>
             <form onSubmit={handleSubmit(handleOnSubmit)}>

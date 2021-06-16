@@ -13,6 +13,8 @@ export interface searchPodcast_searchPodcast_podcasts {
   __typename: "Podcast";
   id: number;
   title: string;
+  thumbnail: string | null;
+  updateAt: any;
 }
 
 export interface searchPodcast_searchPodcast {

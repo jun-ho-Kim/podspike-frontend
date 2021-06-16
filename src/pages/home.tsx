@@ -3,7 +3,7 @@ import React  from 'react';
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { getPodcast_Query } from "../__generated__/getPodcast_Query";
-
+import { PodcastList } from "../components/podcastList";
 
 export const GETPODCAST_QUERY = gql`
     query getPodcast_Query {
@@ -16,38 +16,43 @@ export const GETPODCAST_QUERY = gql`
                 category
                 description
                 thumbnail
+                host {
+                    id
+                    nickName
+                }
             }
         }
     }
 `;
 
 export const Home = () =>  {
-    const {data, loading, error} = useQuery(GETPODCAST_QUERY, {
+    const {data, loading, error} = useQuery<getPodcast_Query>(GETPODCAST_QUERY, {
     });
     console.log("DATA", data)
     return (
-        <div className='w-max m-3' >
+    <div>
+        <div className='w-full m-3 flex flex-col justify-center items-center' >
             <Helmet>
                 <title>홈 | Podspike</title>
             </Helmet>
             {loading ? "Loading..." : (
             <>
-            <h1 className='font-semibold mb-3'>신규 팟캐스트</h1>
-                <div className='w-max grid grid-cols-4 gap-2'>
-                    {data?.getPodcast.podcast && data?.getPodcast.podcast.map((podcast: any) => 
+            <h1 className='font-semibold mb-3 '>신규 팟캐스트</h1>
+                <div className='grid grid-cols-6 gap-6'>
+                    {data?.getPodcast.podcast && data?.getPodcast.podcast.map((podcast) => 
                     <Link key={podcast.id} to={`/${podcast.id}`}>
-                        <div style={{backgroundImage: `url(${podcast.thumbnail})`}} className='bg-cover bg-center mb-3  py-12'/>
-                        <div className='mx-2'>
-                            <h1 className='font-bold text-lg'>{podcast.title}</h1>
-                            <span className='text-xs'>{podcast.description}</span>
-                            <h3>{podcast.category}</h3>
-                        </div>
+                        <PodcastList 
+                            title={podcast.title}
+                            nickName={podcast.host.nickName}
+                            thumbnail={podcast.thumbnail}
+                        />
                     </Link>
                 )}
                 </div>
             </>
             )}
         </div>
+    </div>
     )
 }
 

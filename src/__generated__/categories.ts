@@ -13,6 +13,9 @@ export interface categories_categories_podcasts {
   __typename: "Podcast";
   id: number;
   title: string;
+  thumbnail: string | null;
+  description: string | null;
+  updateAt: any;
 }
 
 export interface categories_categories {

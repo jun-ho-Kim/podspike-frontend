@@ -1,5 +1,5 @@
 import { useMutation, gql } from "@apollo/client";
-import React  from "react";
+import React, { useState }  from "react";
 import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
@@ -8,6 +8,8 @@ import { Button } from "../components/button";
 import { FormError } from "../components/form-error";
 import { createAccountMutation } from "../__generated__/createAccountMutation";
 import { UserRole } from "../__generated__/globalTypes";
+import DropZone from "react-dropzone"
+import Axios from "axios";
 
 
 interface IFormProps {
@@ -16,6 +18,7 @@ interface IFormProps {
     passwordConfirm: string;
     role: UserRole;
     nickName: string;
+    photo: string;
 
 }
 
@@ -30,13 +33,13 @@ export const CREATEACCOUNT = gql`
 
 
 export const CreateAccount = () => {
-    const history = useHistory()
+    const history = useHistory();
+    
     const {register, getValues, errors, formState, handleSubmit} = useForm<IFormProps>({
         mode: "onChange",
-        
     })
-    const {email, nickName, password, passwordConfirm, role} = getValues();
-    const onCompleted = (data: createAccountMutation) => {
+    const {email, nickName, password, passwordConfirm, role, photo} = getValues();
+    const onCompleted =  async (data: createAccountMutation) => {
         console.log("onCompleted", data);
         const {
             createAccount: {ok}
@@ -44,7 +47,9 @@ export const CreateAccount = () => {
         try {
             if(ok) {
                 alert('회원가입에 성공했습니다.')
-                history.push('/')
+                history.push('/');
+
+             
             }
         } catch(error) {
             console.log(error);
@@ -54,32 +59,38 @@ export const CreateAccount = () => {
     
     const [creaetAccountMutaion, {data: createAccountResult, loading}] = useMutation(CREATEACCOUNT, {
         onCompleted,
-        variables : {
-            createAccountInput: {
-                email,
-                nickName,
-                password,
-                passwordConfirm,
-                role,
-            }
-        }  
-    })
-    const handleOnSubmit = () => {
-        creaetAccountMutaion();
+
+    });
+    const handleOnSubmit = async() => {
+
+        creaetAccountMutaion({
+            variables : {
+                createAccountInput: {
+                    email,
+                    nickName,
+                    password,
+                    passwordConfirm,
+                    role,
+                    // profilePhoto,
+                }
+            }              
+        });
     }
+
     return (
-        <div className="w-screen h-screen min-w-max flex justify-center items-center font-mono">
+        <div className="w-screen h-screen min-w-max flex justify-center items-center">
             <Helmet>
                 <title>회원가입 | Podspike</title>
             </Helmet>
-            <div className=''>
+            <div className='font-bold'>
             <h1
-                className='mb-8 text-2xl font-bold text-center'
+                className='mb-2 text-2xl font-bold text-center'
             >회원가입</h1>
             <form
-                className='grid gap-6 '
+                className='grid gap-2 '
                 onSubmit={handleSubmit(handleOnSubmit)}
-            >
+            >   
+                <label>이메일</label>
                 <input
                     className="border font-bold border-gray-400 rounded-md py-3 px-5 focus:ring-1 focus:ring-black focus:ring-offset-1 focus:ring-offset-gray-500 focus:ring-opacity-80 outline-none transition duration-500"
                     ref={register({
@@ -93,6 +104,7 @@ export const CreateAccount = () => {
                 />
                 {errors.email?.message && <FormError error={errors.email?.message} />}
                 {errors.email?.type === "pattern" && <FormError error="이메일을 입력해주세요" />}
+                <label>별명</label>
                 <input
                     className="border font-bold border-gray-400 rounded-md py-3 px-5 focus:ring-1 focus:ring-black focus:ring-offset-1 focus:ring-offset-gray-500 focus:ring-opacity-80 outline-none transition duration-500"
                     ref={register({
@@ -103,7 +115,8 @@ export const CreateAccount = () => {
                     placeholder="닉네임"
                 />
                 {errors.nickName?.message && <FormError error={errors.nickName?.message} />}
-                {errors.nickName?.type === "pattern" && <FormError error="닉네임을 입력해주세요" />}                
+                {errors.nickName?.type === "pattern" && <FormError error="닉네임을 입력해주세요" />}          
+                <label>비밀번호</label>      
                 <input
                     className="border font-bold border-gray-400 rounded-md py-3 px-5 focus:ring-1 focus:ring-black focus:ring-offset-1 focus:ring-offset-gray-500 focus:ring-opacity-80 outline-none transition duration-500"
                     ref={register({
@@ -124,6 +137,7 @@ export const CreateAccount = () => {
                     placeholder="비밀번호"
                 />
                 {errors.password?.message && <FormError error={errors.password?.message}/>}
+                <label>비밀번호 확인</label>  
                 <input
                     className='border font-bold border-gray-400 rounded-md py-3 px-5 focus:ring-1 focus:ring-black focus:ring-offset-1 focus:ring-offset-gray-500 focus:ring-opacity-80 outline-none transition duration-500'
                     ref={register({
@@ -141,17 +155,30 @@ export const CreateAccount = () => {
                     placeholder="비밀번호확인"
                 />
                 {errors.passwordConfirm?.message && <FormError error={errors.passwordConfirm?.message} />}
+                <label>접근권한</label>  
                 <select
                     className='border font-bold border-gray-400 rounded-md py-3 px-5 focus:ring-1 focus:ring-black focus:ring-offset-1 focus:ring-offset-gray-500 focus:ring-opacity-80 outline-none transition duration-500'
                     name="role"
                     ref={register({required: true})}
                 >
-                    <option>Host</option>
-                    <option>Listener</option>
-                {/* {Object.keys(UserRole).map((role, index) => {
+
+                {Object.keys(UserRole).map((role, index) => (
                     <option key={index}>{role}</option>
-                })} */}
+                )
+                )}
                 </select>
+
+                
+                {/* <DropZone
+                    onDrop={handleOnDrop}
+                >
+                    {({getRootProps, getInputProps}) => (
+                        <div className='w-44 h-44 border-black border-2' {...getRootProps()}>
+                            <input {...getInputProps()} />
+                        </div>
+                    )}
+                </DropZone> */}
+
                 <Button
                     canClick={formState.isValid}
                     loading={loading} 

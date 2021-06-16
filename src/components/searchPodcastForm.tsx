@@ -15,8 +15,6 @@ export const SearchPodcastForm = () => {
     
     const handleOnSubmit = (event: any) => {
         // event.preventDefault();
-        console.log("search value", searchQuery);
-        
         // searchPodcastQuery();    
         // console.log("search data", data);
         // console.log("search error", error);
@@ -30,12 +28,17 @@ export const SearchPodcastForm = () => {
     return (
         <div>
             <form onSubmit={handleSubmit(handleOnSubmit)}>
+                <div className='border border-black border-opacity-30 rounded- rounded-md'>
+                <label>
                 <input
-                    className='border'
+                    className=''
                     ref={register()}
                     name='searchQuery'
                 /> 
-
+                <span onClick={handleOnSubmit}>🔍</span>
+                </label>
+                </div>
+                
                 {/* searchBar 따로 만들기> 아니면 useLazyQuery를 사용할지  */}
             </form>
         </div>

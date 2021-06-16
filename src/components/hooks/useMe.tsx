@@ -9,7 +9,8 @@ export const MEQUERY = gql`
             email
             nickName
             profilePhoto
-            role 
+            role
+            subscriptions {id}
         }
     }
 `;

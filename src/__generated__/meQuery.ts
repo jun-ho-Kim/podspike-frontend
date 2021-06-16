@@ -9,6 +9,11 @@ import { UserRole } from "./globalTypes";
 // GraphQL query operation: meQuery
 // ====================================================
 
+export interface meQuery_me_subscriptions {
+  __typename: "Podcast";
+  id: number;
+}
+
 export interface meQuery_me {
   __typename: "User";
   id: number;
@@ -16,6 +21,7 @@ export interface meQuery_me {
   nickName: string;
   profilePhoto: string;
   role: UserRole;
+  subscriptions: meQuery_me_subscriptions[];
 }
 
 export interface meQuery {
