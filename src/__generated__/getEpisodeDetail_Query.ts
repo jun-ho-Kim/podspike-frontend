@@ -22,6 +22,7 @@ export interface getEpisodeDetail_Query_getEpisodeDetail_episode {
   title: string;
   description: string;
   createdAt: any;
+  audioUrl: string | null;
   podcast: getEpisodeDetail_Query_getEpisodeDetail_episode_podcast;
 }
 

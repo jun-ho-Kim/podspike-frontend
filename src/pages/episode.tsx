@@ -1,7 +1,9 @@
 import { gql, useQuery } from "@apollo/client";
 import { url } from "inspector";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { PlayerContext } from "../routers/logged-in-router";
+import { AudioPlayer } from "../components/audioPlayer";
 import { getEpisodeDetail_Query, getEpisodeDetail_QueryVariables } from "../__generated__/getEpisodeDetail_Query";
 
 export const DETAILEPISODE_QUERY = gql`
@@ -14,6 +16,7 @@ export const DETAILEPISODE_QUERY = gql`
                 title
                 description
                 createdAt
+                audioUrl
                 podcast {
                     id
                     title
@@ -29,6 +32,7 @@ interface IParam {
 }
 
 export const DetailEpisode = () => {
+    const audioPlayerState = useContext(PlayerContext)
     const {episodeId} = useParams<IParam>();
     const onCompleted = (data: getEpisodeDetail_Query) => {
         console.log("EpisodeData", data);
@@ -36,6 +40,8 @@ export const DetailEpisode = () => {
             getEpisodeDetail: {ok, episode}
         } = data;
         let createdAt = data?.getEpisodeDetail.episode?.createdAt.substring(2,10).replace(/-/g, ".");
+        audioPlayerState?.setAudioUrl(`${episode?.audioUrl}`)
+        audioPlayerState?.setEpisode(episode);
 }
     const {data, loading, error} = useQuery<
         getEpisodeDetail_Query, 
@@ -48,18 +54,26 @@ export const DetailEpisode = () => {
             }
         }
     });
+    const hanldeOnClick = () => {
+        audioPlayerState?.setIsShowing(true);
+        // if(audioPlayerState?.isPlaying) {
+        //     audioPlayerState?.setIsPlaying(false);
+        // } else {
+        //     audioPlayerState?.setIsPlaying(true);
+        // }
+    }
 
-    console.log("EpisodeData err", error);
-
+    useEffect(() => {
+        audioPlayerState?.setThumbnail(`${data?.getEpisodeDetail.episode?.podcast.thumbnail}`);
+    }, [])
 
     return (
         <div>
-            
             {data?.getEpisodeDetail.episode && (
                 <div className='flex flex-col items-center mt-10'>
-                    <div className='flex content-start '>
+                    <div className='lg:flex lg:flex-row content-start sm:flex'>
                         <div
-                            className='bg-yellow-800 w-max h-2 p-5 mr-5' 
+                            className='bg-yellow-800 w-40 h-40 p-5 mr-5 bg-center bg-cover rounded-lg' 
                             style={{backgroundImage: `url(${data?.getEpisodeDetail.episode.podcast.thumbnail})`}} 
                         /> 
                         <div className='flex flex-col'>
@@ -72,7 +86,10 @@ export const DetailEpisode = () => {
                             </Link>
                             <span>{data?.getEpisodeDetail.episode?.createdAt.substring(2,10).replace(/-/g, ".")}</span>
                             <span>{data?.getEpisodeDetail.episode.description}</span>
-                            <button className='bg-blue-500 px-6 py-2 rounded-3xl text-white mt-2'>▶ 에피소드 듣기</button>
+
+                            <button
+                                onClick={hanldeOnClick} 
+                                className='bg-blue-500 px-6 py-2 rounded-3xl text-white mt-2'>{`${audioPlayerState?.isPlaying? '⏸ 일시중지'  : '▶ 에피소드 듣기'} `}</button>                    
                         </div>
                     </div>
                 </div>

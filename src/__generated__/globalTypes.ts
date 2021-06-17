@@ -37,9 +37,9 @@ export interface CreateAccountInput {
 export interface CreateEpisodeInput {
   id: number;
   title: string;
-  category: string;
   description: string;
   episodeImg?: string | null;
+  audioUrl?: string | null;
 }
 
 export interface CreatePodcastInput {
@@ -66,10 +66,10 @@ export interface EditProfileInput {
 
 export interface EpisodeInput {
   title: string;
-  category: string;
   description: string;
   episodeImg?: string | null;
   podcast: PodcastInput;
+  audioUrl?: string | null;
   player: UserInputType;
 }
 

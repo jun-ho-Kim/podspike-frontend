@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { AudioHTMLAttributes, createContext, MutableRefObject, useRef, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch, useHistory } from 'react-router-dom';
 import { isLoggedInVar } from '../apollo';
 import { Header } from '../components/header';
+import { AudioPlayer } from '../components/audioPlayer';
 import { SearchPodcast } from '../components/searchPodcast';
 import { SearchPodcastForm } from '../components/searchPodcastForm';
 import { LOCALSTORAGE_TOKEN } from '../constants';
@@ -19,6 +20,25 @@ import { DetailEpisode } from '../pages/episode';
 import { EditProfile } from '../pages/edit-profile';
 import { Subscriptions } from '../pages/Listener/subscriptions';
 import { MyPodcasts } from '../pages/Host/myPodcasts';
+import { getEpisode } from '../__generated__/getEpisode';
+import { getEpisodeDetail_Query, getEpisodeDetail_Query_getEpisodeDetail, getEpisodeDetail_Query_getEpisodeDetail_episode } from '../__generated__/getEpisodeDetail_Query';
+
+interface IContext {
+    isShowing: boolean;
+    setIsShowing: React.Dispatch<boolean>;
+    isPlaying: boolean;
+    setIsPlaying: React.Dispatch<boolean>;
+    audioUrl: string | null;
+    setAudioUrl: React.Dispatch<string | null>;
+    thumbnail: string | null;
+    setThumbnail: React.Dispatch<string | null>;
+    podcastTitle: string | null; 
+    setPodcastTitle: React.Dispatch<string | null>;
+    episode: getEpisodeDetail_Query_getEpisodeDetail_episode | null; 
+    setEpisode: React.Dispatch<getEpisodeDetail_Query_getEpisodeDetail_episode | null>;
+}
+
+export const PlayerContext = createContext<IContext | null>(null)
 
 const hostRoutes = [
     {path: "/", component: <MyPodcasts />},
@@ -47,7 +67,13 @@ const commonRouter = [
 
 
 export const LoggedInRouter = () => {
-    const history = useHistory()
+    const history = useHistory();
+    const [isShowing, setIsShowing] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [audioUrl, setAudioUrl] = useState<string | null>(null);
+    const [episode, setEpisode] = useState<getEpisodeDetail_Query_getEpisodeDetail_episode| null>(null);
+    const [podcastTitle, setPodcastTitle] = useState<string | null>("");
+    const [thumbnail, setThumbnail] = useState<string | null>("");
     const handleOnClick = () => {
         isLoggedInVar(false);
         localStorage.removeItem(LOCALSTORAGE_TOKEN);
@@ -55,6 +81,22 @@ export const LoggedInRouter = () => {
         history.push("/");
     }
     return (
+        <PlayerContext.Provider
+            value={{
+                isShowing,
+                isPlaying,
+                audioUrl,
+                episode, 
+                podcastTitle,
+                thumbnail,
+                setIsShowing,
+                setIsPlaying,
+                setAudioUrl,
+                setEpisode,
+                setPodcastTitle,
+                setThumbnail,
+            }}
+        >
         <Router>
             <Header />
             <Switch>
@@ -96,6 +138,7 @@ export const LoggedInRouter = () => {
                     <NotFound />
                 </Route>
             </Switch>
+            <AudioPlayer />
             
             <div className={'flex items-center justify-center absolute top-0 right-0'}>
                 <span onClick={handleOnClick}
@@ -104,8 +147,6 @@ export const LoggedInRouter = () => {
                 </span>
             </div>
         </Router>
+        </PlayerContext.Provider>
     )
-
-
-
 }

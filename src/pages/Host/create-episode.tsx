@@ -38,10 +38,8 @@ export const CreateEpisode = () => {
                 id: +id,
                 title,
                 description,
-                category: "null",
                 episodeImg: "null",
-                audioFile: file
-                
+                audioUrl: file,
             }
 
         }
@@ -49,22 +47,22 @@ export const CreateEpisode = () => {
     console.log("data", data);
     
     const handleOnSubmit = async () => {
-        // if(audioFile && audioFile.length > 0) {
-        //     const file = audioFile[0]
-        //     const formBody = new FormData()
-        //     formBody.append("file", file);
-        //     console.log("audio file", file);
-        //     console.log("audio FormBody", formBody);
-        //     await axios.post('http://localhost:5000/uploads/audio', formBody)
-        //     .then(response => {
-        //         console.log("response", response)
-        //         if(response) {
-        //             setFile(response.data.url);
-        //             console.log("response.data.url", response.data.url);
-        //         } else {
-        //             console.log("error", error);
-        //         }
-        //     })
+        if(audioFile && audioFile.length > 0) {
+            const file = audioFile[0]
+            const formBody = new FormData()
+            formBody.append("file", file);
+            console.log("audio file", file);
+            console.log("audio FormBody", formBody);
+            await axios.post('http://localhost:5000/uploads/audio', formBody)
+            .then(response => {
+                console.log("response", response)
+                if(response) {
+                    setFile(response.data.url);
+                    console.log("response.data.url", response.data.url);
+                } else {
+                    console.log("error", error);
+                }
+            })
             createEpisode();
         }
         }

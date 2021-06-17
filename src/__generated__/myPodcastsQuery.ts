@@ -11,6 +11,7 @@ export interface myPodcastsQuery_myPodcasts_myPodcasts {
   __typename: "Podcast";
   id: number;
   title: string;
+  createdAt: any;
   thumbnail: string | null;
   category: string;
   description: string | null;

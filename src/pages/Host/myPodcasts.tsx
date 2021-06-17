@@ -47,12 +47,7 @@ export const MyPodcasts = () => {
             </>
             )}
         </div>
-        <audio
-        controls
-        src="https://podspike-audio.s3.ap-northeast-2.amazonaws.com/1623556708087_%EC%82%90%EC%95%BD%EC%9D%B4.m4a">
-            Your browser does not support the
-            <code>audio</code> element.
-    </audio>
+
     </div>
     )
 }
