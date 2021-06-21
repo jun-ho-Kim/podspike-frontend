@@ -47,7 +47,11 @@ export const Subscriptions = () => {
                             <h4 className="text-lg font-semibold">
                                 {podcast.title}
                             </h4>
-                            <span className="text-xs opacity-80">{podcast.updateAt.substring(2,10).replace(/-/g, ".")}</span>
+                            <div className="text-xs">
+                                <span className="opacity-80">{podcast.updateAt.substring(2,10).replace(/-/g, ".")}</span>
+                                {/* <p className='text-gray-500 mt-1 ml-2'>구독자 <span className='text-gray-900'>{`${podcast.subscriber.length}`}</span></p> */}
+
+                            </div>
                         </div>
                     </div>
                     </Link>

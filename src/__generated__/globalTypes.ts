@@ -32,14 +32,16 @@ export interface CreateAccountInput {
   subscriptions?: PodcastInput[] | null;
   reviews?: ReviewInput[] | null;
   playedLists?: EpisodeInput[] | null;
+  sawEpisode?: EpisodeInput[] | null;
 }
 
 export interface CreateEpisodeInput {
   id: number;
   title: string;
   description: string;
-  episodeImg?: string | null;
+  seenNum?: number | null;
   audioUrl?: string | null;
+  audioLength?: number | null;
 }
 
 export interface CreatePodcastInput {
@@ -67,10 +69,12 @@ export interface EditProfileInput {
 export interface EpisodeInput {
   title: string;
   description: string;
-  episodeImg?: string | null;
+  seenNum?: number | null;
   podcast: PodcastInput;
   audioUrl?: string | null;
+  audioLength?: number | null;
   player: UserInputType;
+  seenUser: UserInputType[];
 }
 
 export interface GetEpisodeDetailInput {
@@ -96,6 +100,8 @@ export interface PodcastInput {
   description?: string | null;
   rating: number;
   thumbnail?: string | null;
+  subscriber?: UserInputType[] | null;
+  subscriberNum?: number | null;
   episodes?: EpisodeInput[] | null;
   host: UserInputType;
   reviews?: ReviewInput[] | null;
@@ -110,6 +116,10 @@ export interface ReviewInput {
   text: string;
   creator: UserInputType;
   podcast: PodcastInput;
+}
+
+export interface SawEpisodesInput {
+  id?: number | null;
 }
 
 export interface SearchPodcastInput {
@@ -130,6 +140,8 @@ export interface UpdatePodcastInput {
   category?: string | null;
   description?: string | null;
   thumbnail?: string | null;
+  subscriber?: UserInputType[] | null;
+  subscriberNum?: number | null;
   host?: UserInputType | null;
 }
 
@@ -144,6 +156,7 @@ export interface UserInputType {
   subscriptions: PodcastInput[];
   reviews?: ReviewInput[] | null;
   playedLists?: EpisodeInput[] | null;
+  sawEpisode?: EpisodeInput[] | null;
 }
 
 //==============================================================

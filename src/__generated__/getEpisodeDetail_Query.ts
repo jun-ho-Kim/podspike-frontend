@@ -9,6 +9,11 @@ import { GetEpisodeDetailInput } from "./globalTypes";
 // GraphQL query operation: getEpisodeDetail_Query
 // ====================================================
 
+export interface getEpisodeDetail_Query_getEpisodeDetail_episode_seenUser {
+  __typename: "User";
+  id: number;
+}
+
 export interface getEpisodeDetail_Query_getEpisodeDetail_episode_podcast {
   __typename: "Podcast";
   id: number;
@@ -23,6 +28,7 @@ export interface getEpisodeDetail_Query_getEpisodeDetail_episode {
   description: string;
   createdAt: any;
   audioUrl: string | null;
+  seenUser: getEpisodeDetail_Query_getEpisodeDetail_episode_seenUser[];
   podcast: getEpisodeDetail_Query_getEpisodeDetail_episode_podcast;
 }
 

@@ -5,6 +5,7 @@ import { Header } from '../components/header';
 import { AudioPlayer } from '../components/audioPlayer';
 import { SearchPodcast } from '../components/searchPodcast';
 import { SearchPodcastForm } from '../components/searchPodcastForm';
+import { PopularPodcasts } from '../pages/Listener/popular-podcasts';
 import { LOCALSTORAGE_TOKEN } from '../constants';
 import { NotFound } from '../pages/404';
 import { Categories } from '../pages/categories';
@@ -35,7 +36,9 @@ interface IContext {
     podcastTitle: string | null; 
     setPodcastTitle: React.Dispatch<string | null>;
     episode: getEpisodeDetail_Query_getEpisodeDetail_episode | null; 
-    setEpisode: React.Dispatch<getEpisodeDetail_Query_getEpisodeDetail_episode | null>;
+    setEpisode: any | null;
+    audioLength: string | null;
+    setAudioLength: React.Dispatch<string | null>;
 }
 
 export const PlayerContext = createContext<IContext | null>(null)
@@ -74,6 +77,7 @@ export const LoggedInRouter = () => {
     const [episode, setEpisode] = useState<getEpisodeDetail_Query_getEpisodeDetail_episode| null>(null);
     const [podcastTitle, setPodcastTitle] = useState<string | null>("");
     const [thumbnail, setThumbnail] = useState<string | null>("");
+    const [audioLength, setAudioLength] = useState<string | null>("");
     const handleOnClick = () => {
         isLoggedInVar(false);
         localStorage.removeItem(LOCALSTORAGE_TOKEN);
@@ -89,24 +93,29 @@ export const LoggedInRouter = () => {
                 episode, 
                 podcastTitle,
                 thumbnail,
+                audioLength,
                 setIsShowing,
                 setIsPlaying,
                 setAudioUrl,
                 setEpisode,
                 setPodcastTitle,
                 setThumbnail,
+                setAudioLength,
             }}
         >
         <Router>
             <Header />
             <Switch>
                 <Route exact path='/'>
-                    {/* <Home /> */}
-                    <MyPodcasts />
+                    <Home />
+                    {/* <MyPodcasts /> */}
                 </Route>
                 <Route exact path='/search'>
                     <SearchPodcast />   
                 </Route>
+                <Route exact path='/rank'>
+                    <PopularPodcasts />   
+                </Route>                
                 <Route exact path='/categories'>
                     <Categories />
                 </Route>
@@ -141,10 +150,10 @@ export const LoggedInRouter = () => {
             <AudioPlayer />
             
             <div className={'flex items-center justify-center absolute top-0 right-0'}>
-                <span onClick={handleOnClick}
+                {/* <span onClick={handleOnClick}
                 className={"bg-blue-100 text-sm"}>
                     로그아웃
-                </span>
+                </span> */}
             </div>
         </Router>
         </PlayerContext.Provider>

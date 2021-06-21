@@ -5,6 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import { PlayerContext } from "../routers/logged-in-router";
 import { AudioPlayer } from "../components/audioPlayer";
 import { getEpisodeDetail_Query, getEpisodeDetail_QueryVariables } from "../__generated__/getEpisodeDetail_Query";
+import { useMe } from "../components/hooks/useMe";
 
 export const DETAILEPISODE_QUERY = gql`
     query getEpisodeDetail_Query($input: GetEpisodeDetailInput!) {
@@ -17,6 +18,9 @@ export const DETAILEPISODE_QUERY = gql`
                 description
                 createdAt
                 audioUrl
+                seenUser{
+                    id
+                }
                 podcast {
                     id
                     title
@@ -34,6 +38,7 @@ interface IParam {
 export const DetailEpisode = () => {
     const audioPlayerState = useContext(PlayerContext)
     const {episodeId} = useParams<IParam>();
+    const me = useMe();
     const onCompleted = (data: getEpisodeDetail_Query) => {
         console.log("EpisodeData", data);
         const {
@@ -42,42 +47,48 @@ export const DetailEpisode = () => {
         let createdAt = data?.getEpisodeDetail.episode?.createdAt.substring(2,10).replace(/-/g, ".");
         audioPlayerState?.setAudioUrl(`${episode?.audioUrl}`)
         audioPlayerState?.setEpisode(episode);
-}
+        // audioPlayerState?.setEpisode(data?.getEpisodeDetail.episode);
+        console.log("setepisode", audioPlayerState?.episode)
+    }
     const {data, loading, error} = useQuery<
         getEpisodeDetail_Query, 
         getEpisodeDetail_QueryVariables
-    >(DETAILEPISODE_QUERY, {
-        onCompleted,
-        variables: {
-            input: {
-                id: +episodeId
+        >(DETAILEPISODE_QUERY, {
+            onCompleted,
+            variables: {
+                input: {
+                    id: +episodeId
+                }
             }
-        }
-    });
-    const hanldeOnClick = () => {
-        audioPlayerState?.setIsShowing(true);
-        // if(audioPlayerState?.isPlaying) {
-        //     audioPlayerState?.setIsPlaying(false);
-        // } else {
-        //     audioPlayerState?.setIsPlaying(true);
-        // }
-    }
-
-    useEffect(() => {
-        audioPlayerState?.setThumbnail(`${data?.getEpisodeDetail.episode?.podcast.thumbnail}`);
-    }, [])
-
-    return (
-        <div>
+        });
+        const hanldeOnClick = () => {
+            audioPlayerState?.setIsShowing(true);
+            // if(audioPlayerState?.isPlaying) {
+                //     audioPlayerState?.setIsPlaying(false);
+                // } else {
+                    //     audioPlayerState?.setIsPlaying(true);
+                    // }
+                }
+                
+                useEffect(() => {
+                    audioPlayerState?.setThumbnail(`${data?.getEpisodeDetail.episode?.podcast.thumbnail}`);
+                }, [])
+                
+                return (
+                    <div>
             {data?.getEpisodeDetail.episode && (
                 <div className='flex flex-col items-center mt-10'>
                     <div className='lg:flex lg:flex-row content-start sm:flex'>
                         <div
                             className='bg-yellow-800 w-40 h-40 p-5 mr-5 bg-center bg-cover rounded-lg' 
                             style={{backgroundImage: `url(${data?.getEpisodeDetail.episode.podcast.thumbnail})`}} 
-                        /> 
+                            /> 
                         <div className='flex flex-col'>
-                            <h3 className='text-4xl font-semibold'>{data?.getEpisodeDetail.episode.title}</h3>
+                            <div className='flex justify-between'>
+                                <h3 className='text-4xl font-semibold'>{data?.getEpisodeDetail.episode.title}</h3>
+                                {me.data?.me.role === "Listener" && data.getEpisodeDetail.episode.seenUser && data.getEpisodeDetail.episode.seenUser.some(seenUser => seenUser.id === me.data?.me.id) 
+                                && <p className='mt-2 text-2xl'>✔</p>}
+                            </div>
                             <Link to={`/${data?.getEpisodeDetail.episode.podcast.id}`}>
                             <h4 className='text-blue-400 text-base font-serif font-medium'    
                             >

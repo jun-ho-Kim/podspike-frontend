@@ -33,6 +33,10 @@ const CATEGORIES_QUERY = gql`
                 thumbnail
                 description
                 updateAt
+                subscriber {
+                    id
+                    nickName
+                }
             }
         }
     }
@@ -97,7 +101,7 @@ export const Categories = () => {
                     <span className='mt-12 text-lg    flex font-semibold'>채널 
                         <p className='text-blue-400 ml-2'> {data?.categories.podcasts?.length}</p>
                     </span>
-                    <div className='mt-8 grid lg:grid-cols-2 gap-x-44 gap-y-6 sm:flex-col '>
+                    <div className='mt-4 grid lg:grid-cols-2 gap-x-44 gap-y-6 sm:flex-col '>
                     {data?.categories.podcasts && data.categories.podcasts.map((podcast, index) => (
                         <div className='flex'>
                             <Link 
@@ -107,16 +111,19 @@ export const Categories = () => {
                                     className='w-24 h-24 bg-center bg-cover rounded-lg'
                                     style={{backgroundImage: `url(${podcast.thumbnail})`}}
                                 />
-                                <div className="ml-7">
+                                <div className="ml-7 flex flex-col">
                                     <h3 className="text-lg font-semibold">{podcast.title}</h3>
                                     <p className="text-sm text-gray-400">
                                         {podcast.description && podcast.description.length >35 ? 
                                         `${podcast.description.substring(0,35)}...` : podcast.description}
                                     </p>
-                                    <span 
-                                        className='text-sm font-medium text-gray-700'
-                                    
-                                    >{podcast.updateAt.substring(0,10).replace(/-/g, ".")}</span>
+                                    <div className='flex'>
+                                        <span 
+                                            className='mt-1 text-sm font-medium text-gray-700'
+                                        >{podcast.updateAt.substring(0,10).replace(/-/g, ".")}</span>
+                                        <p></p>
+                                        <p className='text-gray-500 text-sm mt-1 ml-2'>구독자 <span className='text-gray-900'>{`${podcast.subscriber?.length}`}</span></p>
+                                    </div>
                                 </div>
                             </Link>
                         </div>

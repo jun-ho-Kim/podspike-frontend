@@ -1,12 +1,36 @@
-import React, { ChangeEvent, ChangeEventHandler, useContext, useEffect, useRef, useState } from 'react';
+import { gql, useMutation, useQuery } from "@apollo/client";
+import React, { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PlayerContext } from '../routers/logged-in-router';
+import { sawEpisodeMutation, sawEpisodeMutationVariables } from "../__generated__/sawEpisodeMutation";
+
+
+export const SAWEPISODE_MUTATION = gql`
+    mutation sawEpisodeMutation($input: SawEpisodesInput!) {
+        sawEpisodes(input: $input) {
+            ok
+            error
+            isSawEpisode
+        }
+    }
+`;
 
 export const AudioPlayer = () => {
     const audioPlayerState = useContext(PlayerContext);
-    const slider = useRef<HTMLInputElement>(document.createElement("input"));
     const audio = useRef<HTMLAudioElement>(document.createElement("audio"));
-    
+    const episodeId = audioPlayerState?.episode?.id && audioPlayerState?.episode?.id 
+    console.log("episodeId", typeof episodeId)
+    const [SawEpisodeMutation, {data, loading, error}] = useMutation<
+    sawEpisodeMutation, 
+    sawEpisodeMutationVariables
+    >(SAWEPISODE_MUTATION, {
+        variables: {
+            input: {
+                id: episodeId
+            }
+        }
+    });
+
     const [volume, setVolume] = useState(50);
     const [duration, setDuration] = useState(20);
     const [currentTime, setCurrentTime] = useState(0);
@@ -59,6 +83,7 @@ export const AudioPlayer = () => {
         if(audioPlayerState?.audioUrl) {
             audio.current.onloadedmetadata = () => {
                 setDuration(audio.current.duration);
+                audioPlayerState.setAudioLength(`${audio.current.duration}`)
                 setCurrentTime(0);
             }
             audio.current.onended = () => {
@@ -66,14 +91,17 @@ export const AudioPlayer = () => {
                 audioPlayerState?.setIsPlaying(false);
                 audio.current.currentTime = 0;
                 setCurrentTime(0);
+
+                SawEpisodeMutation();
             }
         }
         audio.current.src = `${audioPlayerState?.audioUrl}`;
+        
         audio.current.load();
         console.log("audio.current.src", audio.current.src)
         console.log("audio", audio);
     }, [audioPlayerState?.audioUrl, audio.current.ended])
-    
+    console.log("audio Saw", data)
     return (
         <div className="flex ">
         {audioPlayerState?.isShowing && (

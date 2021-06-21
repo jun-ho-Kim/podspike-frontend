@@ -58,26 +58,36 @@ export const UpdatePodcast = () => {
     }
 
     return (
-        <div>
-            <form onSubmit={handleSubmit(handleOnSubmit)}>
-                <h4>팟캐스트 수정</h4>
+        <div className='font-bold w-screen h-screen min-w-max flex flex-col justify-center items-center'>
+            <h1 className='text-2xl font-bold text-center'>
+                팟캐스트 수정
+            </h1>
+            <form
+                className='grid gap-y-2 mt-6'
+                onSubmit={handleSubmit(handleOnSubmit)}>
                 <label>
                     방송명
                 </label>
                 <input
-                    className="border"
+                    className="border font-bold border-gray-400 rounded-md py-3 px-5 focus:ring-1 focus:ring-black focus:ring-offset-1 focus:ring-offset-gray-500 focus:ring-opacity-80 outline-none transition duration-500"
                     ref={register()}
                     name="title"
+                    placeholder='방송명'
                 />
                 <label>
                     방송설명
                 </label>
                 <input
-                    className="border"
+                    className="border font-bold border-gray-400 rounded-md py-3 px-5 focus:ring-1 focus:ring-black focus:ring-offset-1 focus:ring-offset-gray-500 focus:ring-opacity-80 outline-none transition duration-500"
                     ref={register()}
                     name="description"
+                    placeholder='방송 설명'
                 />
+                <label className='mt-2'>
+                    카테고리
+                </label>                
                 <select
+                    className='border py-1 rounded-lg mb-4'
                     ref={register()}
                     name="category"
                 >
@@ -86,7 +96,7 @@ export const UpdatePodcast = () => {
                     <option key={index}>{category}</option>
                 ))}
                 </select>
-                <Button canClick={formState.isValid} loading={loading} text="text" />
+                <Button canClick={formState.isValid} loading={loading} text="방송 수정" />
             </form>
         </div>
     )

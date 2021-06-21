@@ -9,6 +9,12 @@ import { CategoriesInput } from "./globalTypes";
 // GraphQL query operation: categories
 // ====================================================
 
+export interface categories_categories_podcasts_subscriber {
+  __typename: "User";
+  id: number;
+  nickName: string;
+}
+
 export interface categories_categories_podcasts {
   __typename: "Podcast";
   id: number;
@@ -16,6 +22,7 @@ export interface categories_categories_podcasts {
   thumbnail: string | null;
   description: string | null;
   updateAt: any;
+  subscriber: categories_categories_podcasts_subscriber[] | null;
 }
 
 export interface categories_categories {

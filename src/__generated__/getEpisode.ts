@@ -9,12 +9,17 @@ import { GetEpisodeInput } from "./globalTypes";
 // GraphQL query operation: getEpisode
 // ====================================================
 
+export interface getEpisode_getAllEpisode_episodes_seenUser {
+  __typename: "User";
+  id: number;
+}
+
 export interface getEpisode_getAllEpisode_episodes {
   __typename: "Episode";
   id: number;
   title: string;
-  episodeImg: string | null;
   createdAt: any;
+  seenUser: getEpisode_getAllEpisode_episodes_seenUser[];
 }
 
 export interface getEpisode_getAllEpisode {

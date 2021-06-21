@@ -85,7 +85,9 @@ export const CreateAccount = () => {
             <div className='font-bold'>
             <h1
                 className='mb-2 text-2xl font-bold text-center'
-            >회원가입</h1>
+            >
+                회원가입
+            </h1>
             <form
                 className='grid gap-2 '
                 onSubmit={handleSubmit(handleOnSubmit)}

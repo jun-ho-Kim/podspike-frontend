@@ -4,6 +4,8 @@ import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { getPodcast_Query } from "../__generated__/getPodcast_Query";
 import { PodcastList } from "../components/podcastList";
+import { recentPodcasts_Query } from "../__generated__/recentPodcasts_Query";
+import { PopularEpisodes } from "../pages/Listener/popular-episodes";
 
 export const GETPODCAST_QUERY = gql`
     query getPodcast_Query {
@@ -25,8 +27,28 @@ export const GETPODCAST_QUERY = gql`
     }
 `;
 
+export const RECENTPODCAST_QUERY = gql`
+    query recentPodcasts_Query {
+        recentPodcasts {
+            error
+            ok
+            podcast {
+                id
+                title
+                category
+                description
+                thumbnail
+                host {
+                    id
+                    nickName
+                }
+            }
+        }
+    }
+`;
+
 export const Home = () =>  {
-    const {data, loading, error} = useQuery<getPodcast_Query>(GETPODCAST_QUERY, {
+    const {data, loading, error} = useQuery<recentPodcasts_Query>(RECENTPODCAST_QUERY, {
     });
     console.log("DATA", data)
     return (
@@ -37,9 +59,9 @@ export const Home = () =>  {
             </Helmet>
             {loading ? "Loading..." : (
             <>
-            <h1 className='font-semibold mb-3 '>신규 팟캐스트</h1>
+            <h1 className='font-semibold mt-10 mb-6 text-xl '>뭐 듣지 고민된다면, 신규 팟캐스트</h1>
                 <div className='grid grid-cols-6 gap-6'>
-                    {data?.getPodcast.podcast && data?.getPodcast.podcast.map((podcast) => 
+                    {data?.recentPodcasts.podcast && data?.recentPodcasts.podcast.map((podcast) => 
                     <Link key={podcast.id} to={`/${podcast.id}`}>
                         <PodcastList 
                             title={podcast.title}
@@ -51,6 +73,7 @@ export const Home = () =>  {
                 </div>
             </>
             )}
+            <PopularEpisodes />
         </div>
     </div>
     )

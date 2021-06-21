@@ -5,6 +5,7 @@ import { GETPODCAST_QUERY } from "../pages/home";
 import { SUBSCRIPTION_QUERY } from "../pages/Listener/subscriptions";
 import { subscribeMutation, subscribeMutationVariables } from "../__generated__/subscribeMutation";
 import { useMe } from "./hooks/useMe";
+// import { SUBSCRIPTION_QUERY } from '../pages/Listener/subscriptions'
 
 export const SUBSCRIBE_MUTATION = gql`
     mutation subscribeMutation($input: SubscribeInput!) {
@@ -36,6 +37,10 @@ export const Subscribe = () => {
                 podcastId: +id
             }
         },
+        refetchQueries: [{
+            query: SUBSCRIPTION_QUERY
+        }
+    ]
     });
 
     const handleOnClick = () => {
