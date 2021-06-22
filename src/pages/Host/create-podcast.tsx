@@ -32,6 +32,8 @@ export const CreatePodcast = () => {
         } = data;
         if(ok) {
             history.push("/");
+        } else {
+            console.log("create error", error)
         }
     }
 
@@ -88,7 +90,6 @@ export const CreatePodcast = () => {
             console.log("form body", thumbnail);
         }
     }
-        console.log("error", error)
     return (
         <div className="font-bold  w-screen h-screen min-w-max flex flex-col justify-center items-center">
             <h4 className='mb-2 text-2xl font-bold text-center'>

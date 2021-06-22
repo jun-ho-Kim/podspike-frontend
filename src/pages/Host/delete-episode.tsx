@@ -79,7 +79,7 @@ export const DeleteEpisode = () => {
         // event.preventDefault();
         await deleteEpisode();
         try {
-            await axios.delete(`https://fervent-kare-84a25b.netlify.app/uploads`, {
+            await axios.delete(`http://podspike.herokuapp.com/uploads`, {
                 data: fileUrl
             })
             .then(response => {

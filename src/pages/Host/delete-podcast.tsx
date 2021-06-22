@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from 'react-router-dom';
 import { Button } from "../../components/button";
+import { deleteEpisode_Mutation } from "../../__generated__/deleteEpisode_Mutation";
 
 
 export const DELETEPODCAST_MUTATION = gql`
@@ -96,9 +97,19 @@ export const DeletePodcast = () => {
     //         console.log(error);
     //     }
     // };
+
+    const onCompleted = (data: deleteEpisode_Mutation) => {
+        const {
+             deleteEpisode: {ok}
+        } = data;
+        if(ok) {
+            history.push('/');
+        }
+    }
     
     
     const [deletePodcast, {data, loading, error}] = useMutation(DELETEPODCAST_MUTATION, {
+        onCompleted,
         variables: {
             input: {
                 id: +id
@@ -121,7 +132,7 @@ export const DeletePodcast = () => {
         // event.preventDefault();
         await deletePodcast();
         try {
-            await axios.delete(`https://fervent-kare-84a25b.netlify.app/uploads`, {
+            await axios.delete(`http://podspike.herokuapp.com/uploads`, {
                 data: fileUrl
             })
             .then(response => {
@@ -145,7 +156,6 @@ export const DeletePodcast = () => {
         } catch(error) {
             console.log("delete error", error);
         } finally {
-            history.push("/");
         }
     }
     return(
