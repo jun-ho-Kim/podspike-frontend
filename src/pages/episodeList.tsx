@@ -14,6 +14,7 @@ export const GETEPISODE_QUERY = gql`
                 id
                 title
                 createdAt
+                episodeImg
                 seenUser{
                     id
                 }
@@ -64,8 +65,8 @@ export const EpisodeList = () => {
                             {me.data?.me.role === "Listener" && episode.seenUser && episode.seenUser.some(seenUser => seenUser.id === me.data?.me.id) 
                             && <p className='mr-5 self-center'>✔</p>}
                             <div 
-                                style={{backgroundImage: `url()`}} 
-                                className='bg-gray-400 w-14 h-14 mb-2'    
+                                style={{backgroundImage: `url(${episode.episodeImg})`}} 
+                                className='bg-white w-14 h-14 mb-2 bg-center bg-cover'    
                             />
                         </div>
                     </Link>

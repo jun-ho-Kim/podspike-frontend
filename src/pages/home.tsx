@@ -53,10 +53,10 @@ export const Home = () =>  {
     console.log("DATA", data)
     return (
     <div>
+        <Helmet>
+            <title>홈 | Podspike</title>
+        </Helmet>
         <div className='w-full m-3 flex flex-col justify-center items-center' >
-            <Helmet>
-                <title>홈 | Podspike</title>
-            </Helmet>
             {loading ? "Loading..." : (
             <>
             <h1 className='font-semibold mt-10 mb-6 text-xl '>뭐 듣지 고민된다면, 신규 팟캐스트</h1>

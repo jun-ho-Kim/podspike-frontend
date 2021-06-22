@@ -11,6 +11,7 @@ export const POPULAREPISODE_QUERY = gql`
             popularEpisodes {
                 id
                 title
+                episodeImg
                 podcast {
                     id
                     title
@@ -30,8 +31,8 @@ export const PopularEpisodes = () => {
                 {data?.popularEpisodes.popularEpisodes?.map((episode, index) => (
                     <div>
                         <div 
-                            style={{backgroundImage: `url()`}} 
-                            className='bg-gray-400 w-24 h-16'    
+                            style={{backgroundImage: `url(${episode.episodeImg})`}} 
+                            className='bg-gray-400 w-24 h-16 bg-center bg-cover'    
                         />
                         <h4>{episode.title}</h4>
                         <span>{episode.podcast.title}</span>

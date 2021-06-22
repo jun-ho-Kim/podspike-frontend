@@ -19,6 +19,7 @@ export interface getEpisode_getAllEpisode_episodes {
   id: number;
   title: string;
   createdAt: any;
+  episodeImg: string | null;
   seenUser: getEpisode_getAllEpisode_episodes_seenUser[];
 }
 

@@ -74,37 +74,36 @@ export const DetailEpisode = () => {
                     audioPlayerState?.setThumbnail(`${data?.getEpisodeDetail.episode?.podcast.thumbnail}`);
                 }, [])
                 
-                return (
-                    <div>
-            {data?.getEpisodeDetail.episode && (
-                <div className='flex flex-col items-center mt-10'>
-                    <div className='lg:flex lg:flex-row content-start sm:flex'>
-                        <div
-                            className='bg-yellow-800 w-40 h-40 p-5 mr-5 bg-center bg-cover rounded-lg' 
-                            style={{backgroundImage: `url(${data?.getEpisodeDetail.episode.podcast.thumbnail})`}} 
-                            /> 
-                        <div className='flex flex-col'>
-                            <div className='flex justify-between'>
-                                <h3 className='text-4xl font-semibold'>{data?.getEpisodeDetail.episode.title}</h3>
-                                {me.data?.me.role === "Listener" && data.getEpisodeDetail.episode.seenUser && data.getEpisodeDetail.episode.seenUser.some(seenUser => seenUser.id === me.data?.me.id) 
-                                && <p className='mt-2 text-2xl'>✔</p>}
-                            </div>
-                            <Link to={`/${data?.getEpisodeDetail.episode.podcast.id}`}>
-                            <h4 className='text-blue-400 text-base font-serif font-medium'    
-                            >
-                                {`${data?.getEpisodeDetail.episode.podcast.title} >`}
-                            </h4>
-                            </Link>
-                            <span>{data?.getEpisodeDetail.episode?.createdAt.substring(2,10).replace(/-/g, ".")}</span>
-                            <span>{data?.getEpisodeDetail.episode.description}</span>
-
-                            <button
-                                onClick={hanldeOnClick} 
-                                className='bg-blue-500 px-6 py-2 rounded-3xl text-white mt-2'>{`${audioPlayerState?.isPlaying? '⏸ 일시중지'  : '▶ 에피소드 듣기'} `}</button>                    
+    return (
+        <div>
+        {data?.getEpisodeDetail.episode && (
+            <div className='flex flex-col items-center mt-10'>
+                <div className='lg:flex lg:flex-row content-start sm:flex'>
+                    <div
+                        className='bg-yellow-800 w-40 h-40 p-5 mr-5 bg-center bg-cover rounded-lg' 
+                        style={{backgroundImage: `url(${data?.getEpisodeDetail.episode.podcast.thumbnail})`}} 
+                        /> 
+                    <div className='flex flex-col'>
+                        <div className='flex justify-between w-72'>
+                            <h3 className='text-2xl font-semibold'>{data?.getEpisodeDetail.episode.title}</h3>
+                            {me.data?.me.role === "Listener" && data.getEpisodeDetail.episode.seenUser && data.getEpisodeDetail.episode.seenUser.some(seenUser => seenUser.id === me.data?.me.id) 
+                            && <p className='mt-2 text-2xl'>✔</p>}
                         </div>
+                        <Link to={`/${data?.getEpisodeDetail.episode.podcast.id}`}>
+                        <h4 className='text-blue-400 text-base font-serif font-medium'    
+                        >
+                            {`${data?.getEpisodeDetail.episode.podcast.title} >`}
+                        </h4>
+                        </Link>
+                        <span>{data?.getEpisodeDetail.episode?.createdAt.substring(2,10).replace(/-/g, ".")}</span>
+                        <span>{data?.getEpisodeDetail.episode.description}</span>
+                        <button
+                            onClick={hanldeOnClick} 
+                            className='bg-blue-500 px-6 py-2 rounded-3xl text-white mt-2'>{`${audioPlayerState?.isPlaying? '⏸ 일시중지'  : '▶ 에피소드 듣기'} `}</button>                    
                     </div>
                 </div>
-            )}
+            </div>
+        )}
         </div>
     )
 }

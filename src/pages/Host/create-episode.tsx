@@ -1,6 +1,6 @@
 import { useMutation, gql } from "@apollo/client";
 import axios from "axios";
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
@@ -23,14 +23,30 @@ interface IParam {
 
 export const CreateEpisode = () => {
     const {id} = useParams<IParam>();
-    const [file, setFile] = useState();
+    const [episodeImgFileUrl, setEpisodeImgFileUrl] = useState();
+    const [audioLength, setAudioLength] = useState<number | null>()
+    const audio =  useRef<HTMLAudioElement>(document.createElement("audio"));
+    const [audioFileUrl, setAudioFileUrl] = useState<string | null>();
     const history = useHistory();
     const { register, getValues, formState, handleSubmit } = useForm({
         mode: "onChange",
     });
-    let audioLength: number;
+    // let audioLength: number;
     const onCompleted = () => {
         history.goBack();
+    }
+
+    const audioLengthFunc = async  (filUrl: string) => {
+        audio.current.onloadedmetadata = () => {
+           return audio.current.src = filUrl;
+        };
+        console.log("audioLengthFunc audio.current.src", audio.current.src)
+        audio.current.load = () => {
+            return setAudioLength(audio.current.duration);
+        };;
+        ;
+        return audioLength
+        
     }
     
     const { title, description, audioFile, episodeImg } = getValues();
@@ -41,46 +57,61 @@ export const CreateEpisode = () => {
                 id: +id,
                 title,
                 description,
-                audioUrl: file,
-                audioLength: 3,
-                seenNum:0,
+                audioUrl: audioFileUrl,
+                audioLength: 0,
+                seenNum: 0,
+                episodeImg: episodeImgFileUrl,
             }
         },
         // refetchQueries: [
-        //     {
-        //         query: GETEPISODE_QUERY
-        //     }
-        // ]
-    });
-    console.log("data", data);
-    
-    const handleOnSubmit = async () => {
-        let fileUrl;
+            //     {
+                //         query: GETEPISODE_QUERY
+                //     }
+                // ]
+            });
+            console.log("data", data);
+            
+            const handleOnSubmit = async () => {
+                let fileUrl: string;
+                console.log("epiimg", episodeImg);
+                
+                if(episodeImg && episodeImg.length >0) {
+                    const formBody = new FormData();
+                    formBody.append("file", episodeImg[0]);
+                    await axios.post('http://localhost:5000/uploads', formBody)
+                    .then(response => {
+                        if(response) {
+                    setEpisodeImgFileUrl(response.data.url);
+                    console.log("setEpisodeImgFileUrl", episodeImgFileUrl)
+                    console.log("episodeImg response.data.url", response.data.url)
+                } else {
+                    console.log('error');
+                }
+            })
+        }
+
+
         if(audioFile && audioFile.length > 0) {
             // const file = audioFile[0]
             const formBody = new FormData()
             formBody.append("file", audioFile[0]);
-            console.log("audio file", file);
             console.log("audio FormBody", formBody);
             await axios.post('http://localhost:5000/uploads/audio', formBody)
             .then(response => {
                 console.log("response", response)
                 if(response) {
-                    setFile(response.data.url);
+                    setAudioFileUrl(response.data.url);
                     fileUrl = response.data.url;
                     console.log("response.data.url", response.data.url);
+                    // audioLengthFunc(fileUrl);
                 } else {
                     console.log("error", error);
                 }
+                console.log("file", fileUrl)
             });
-            console.log("file", fileUrl)
-            const audio = new Audio(fileUrl);
-            audio.onloadedmetadata = () => {
-                audioLength = audio.duration;
-            };
-            console.log("audioLength", audioLength);
-            audio.load();
+            
         }
+        console.log("audioLength", audio);
         createEpisode();
     }
     return (
@@ -122,6 +153,7 @@ export const CreateEpisode = () => {
                     에피소드 썸네일
                 </label>                
                 <input
+                    ref={register()}
                     name="episodeImg"
                     type="file"
                     accept="image/*"

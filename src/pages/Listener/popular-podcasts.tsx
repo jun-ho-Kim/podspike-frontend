@@ -58,7 +58,9 @@ export const PopularPodcasts = () => {
                                          className='mt-1 text-sm font-medium text-gray-700'
                                      >{podcast.updateAt.substring(0,10).replace(/-/g, ".")}</span>
                                      <p></p>
-                                     <p className='text-gray-500 text-sm mt-1 ml-2'>구독자 <span className='text-gray-900'>{`${podcast.subscriber?.length}`}</span></p>
+                                     <p className='text-gray-500 text-sm mt-1 ml-2'>구독자 <span className='text-gray-900'>
+                                        {podcast.subscriber ? `${podcast.subscriber?.length}`: 0}</span>
+                                    </p>
                                  </div>
                              </div>
                          </Link>

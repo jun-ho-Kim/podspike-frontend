@@ -17,6 +17,7 @@ export interface popularEpisode_Query_popularEpisodes_popularEpisodes {
   __typename: "Episode";
   id: number;
   title: string;
+  episodeImg: string | null;
   podcast: popularEpisode_Query_popularEpisodes_popularEpisodes_podcast;
 }
 

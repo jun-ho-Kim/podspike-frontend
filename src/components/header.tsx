@@ -28,13 +28,13 @@ const HeaderPopup: React.FC<HeaderPopupProps> = ({dropDownRef, popup, isHost}) =
         <div className='flex flex-col py-2 absolute top-6 left-12 bg-blue-300 z-10 mt-2 w-40  rounded-md'>
 
             <Link
-                className='ml-2' 
+                className='ml-2 hover:text-white' 
                 to='/edit-profile'>
                 ▪ 프로필 수정
             </Link>
             <span 
                 onClick={handleOnClick}
-                className='ml-2'>
+                className='ml-2 hover:text-white cursor-pointer'>
                 ▪ 로그아웃
             </span>
         </div>
@@ -70,13 +70,7 @@ export const Header = () => {
                         <div></div>
                         <div className='flex justify-center'>
                             <li className={`${pathname === '/' && 'text-blue-600 font-semibold'}`}>
-                                <Link className='mr-4' to='/'>홈</Link>
-                            </li>
-                            <li className={`${pathname === '/rank' && 'text-blue-600 font-semibold'}`}>
-                                <Link to='/rank'>랭킹</Link>
-                            </li>
-                            <li className={`${pathname === '/categories' && 'text-blue-600 font-semibold'}`}>
-                                <Link className='mr-4' to='categories'>카테고리</Link>
+                                <Link className='mr-4' to='/'>방송 관리</Link>
                             </li>
                             <li className={`${pathname === '/create-podcast' && 'text-blue-600 font-semibold'}`}>
                                 <Link className='mr-3' to="create-podcast">방송 생성</Link>
@@ -120,28 +114,28 @@ export const Header = () => {
             <div className='w-full md:inline-block sm:hidden hidden py-4 px-40 text-xl'>
                     <ul className='flex justify-around font-semibold'>
                         <li className={`${pathname === '/' && 'text-blue-600 font-semibold'}`}>
-                            <Link to='/'>홈</Link>
+                            <Link className='mr-4' to='/'>홈</Link>
                         </li>
                         <li className={`${pathname === '/rank' && 'text-blue-600 font-semibold'}`}>
-                                <Link to='/rank'>랭킹</Link>
+                                <Link className='mr-4' to='/rank'>랭킹</Link>
                          </li>
                         {/* <li className={`${pathname === '/rank' && 'text-blue-600 font-semibold'}`}>
                             <Link to='/rank'>랭킹</Link>
                         </li> */}
                         <li className={`${pathname === '/categories' && 'text-blue-600 font-semibold' }`}>
-                            <Link to='/categories'>카테고리</Link>
+                            <Link className='mr-4' to='/categories'>카테고리</Link>
                         </li>
                         {/* <li className={`${pathname === '/search' && 'text-blue-600 font-semibold'}`}>
                             <Link to='/search'>검색</Link>
                         </li> */}
                         <li className={`${pathname === '/subscription' && 'text-blue-600 font-semibold'}`}>
-                            <Link to='/subscription'>구독</Link>
+                            <Link className='mr-4' to='/subscription'>구독</Link>
                         </li>
                         <li>
                             <SearchPodcastForm />
                         </li>
                         <li>
-                            <div className='flex relative'
+                            <div className='flex relative cursor-pointer'
                                 onClick={handleOnPopupClick}
                             >
                                 <div 

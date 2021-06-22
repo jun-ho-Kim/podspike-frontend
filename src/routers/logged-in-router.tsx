@@ -23,6 +23,8 @@ import { Subscriptions } from '../pages/Listener/subscriptions';
 import { MyPodcasts } from '../pages/Host/myPodcasts';
 import { getEpisode } from '../__generated__/getEpisode';
 import { getEpisodeDetail_Query, getEpisodeDetail_Query_getEpisodeDetail, getEpisodeDetail_Query_getEpisodeDetail_episode } from '../__generated__/getEpisodeDetail_Query';
+import { useMe } from '../components/hooks/useMe';
+import { UserRole } from '../__generated__/globalTypes';
 
 interface IContext {
     isShowing: boolean;
@@ -49,19 +51,23 @@ const hostRoutes = [
     {path: "/:id/edit-podcast", component: <UpdatePodcast />},
     {path: "/:id/delete-podcast", component: <DeletePodcast />},
     {path: "/:id/create-episode", component: <CreateEpisode />},
-    {path: "/:id/episodes/:episodeId", component: <DetailEpisode />},
+
     // {path: ":id/episodes/:episodeId/edit", component: <UpdateEpisode />},
 ];
 
 const listenerRouter = [
     {path: "/", component: <Home />},
+    {path: "/search", component: <SearchPodcast />},
     {path: "/subscription", component: <Subscriptions />},
+    {path: "/category", component: <Categories />},
+    {path: "/rank", component: <PopularPodcasts />  },
 ];
 
 const commonRouter = [
-    {path: "/search", component: <SearchPodcast />},
+    {path: "/edit-profile", component: <EditProfile />},
     {path: "/:id", component: <Podcast />},
     {path: "/:id/episodes/:episodeId", component: <DetailEpisode />},
+
 ]
 
 
@@ -71,6 +77,7 @@ const commonRouter = [
 
 export const LoggedInRouter = () => {
     const history = useHistory();
+    const me = useMe();
     const [isShowing, setIsShowing] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
     const [audioUrl, setAudioUrl] = useState<string | null>(null);
@@ -106,55 +113,37 @@ export const LoggedInRouter = () => {
         <Router>
             <Header />
             <Switch>
-                <Route exact path='/'>
-                    <Home />
-                    {/* <MyPodcasts /> */}
-                </Route>
-                <Route exact path='/search'>
-                    <SearchPodcast />   
-                </Route>
-                <Route exact path='/rank'>
-                    <PopularPodcasts />   
-                </Route>                
-                <Route exact path='/categories'>
-                    <Categories />
-                </Route>
-                <Route exact path='/create-podcast'>
-                    <CreatePodcast />
-                </Route>
-                <Route exact path='/edit-profile'>
-                    <EditProfile />
-                </Route>
-                <Route exact path='/subscription'>
-                    <Subscriptions />
-                </Route>
-                <Route exact path='/:id/create-episode'>
-                    <CreateEpisode />
-                </Route>
-                <Route exact path='/:id'>
-                    <Podcast />
-                </Route>
-                <Route exact path='/:id/update-podcast'>
-                    <UpdatePodcast />
-                </Route>
-                <Route exact path='/:id/delete-podcast'>
-                    <DeletePodcast />
-                </Route>          
-                <Route exact path='/:id/episodes/:episodeId'>
-                    <DetailEpisode />
-                </Route>
+                {me.data?.me.role === UserRole.Host &&
+                    hostRoutes.map(route => (
+                        <Route exact key={route.path} path={route.path}>
+                            {route.component}
+                        </Route>
+                    ))
+                };
+                {me.data?.me.role === UserRole.Listener &&
+                    listenerRouter.map(route => (
+                        <Route exact key={route.path} path={route.path}>
+                            {route.component}
+                        </Route>
+                    ))
+                };
+                {commonRouter.map(route => (
+                    <Route exact key={route.path} path={route.path}>
+                        {route.component}
+                    </Route>
+                ))}
                 <Route>
                     <NotFound />
                 </Route>
             </Switch>
             <AudioPlayer />
             
-            <div className={'flex items-center justify-center absolute top-0 right-0'}>
+            {/* <div className={'flex items-center justify-center absolute top-0 right-0'}> */}
                 {/* <span onClick={handleOnClick}
                 className={"bg-blue-100 text-sm"}>
                     로그아웃
                 </span> */}
-            </div>
+            {/* </div> */}
         </Router>
         </PlayerContext.Provider>
     )

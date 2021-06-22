@@ -40,6 +40,7 @@ export interface CreateEpisodeInput {
   title: string;
   description: string;
   seenNum?: number | null;
+  episodeImg?: string | null;
   audioUrl?: string | null;
   audioLength?: number | null;
 }
@@ -69,12 +70,17 @@ export interface EditProfileInput {
 export interface EpisodeInput {
   title: string;
   description: string;
+  episodeImg?: string | null;
   seenNum?: number | null;
   podcast: PodcastInput;
   audioUrl?: string | null;
   audioLength?: number | null;
   player: UserInputType;
   seenUser: UserInputType[];
+}
+
+export interface EpisodeSearchInput {
+  id: number;
 }
 
 export interface GetEpisodeDetailInput {
