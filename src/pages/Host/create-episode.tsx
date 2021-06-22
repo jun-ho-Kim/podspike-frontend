@@ -78,7 +78,7 @@ export const CreateEpisode = () => {
                 if(episodeImg && episodeImg.length >0) {
                     const formBody = new FormData();
                     formBody.append("file", episodeImg[0]);
-                    await axios.post('http://localhost:5000/uploads', formBody)
+                    await axios.post('https://fervent-kare-84a25b.netlify.app/uploads', formBody)
                     .then(response => {
                         if(response) {
                     setEpisodeImgFileUrl(response.data.url);
@@ -96,7 +96,7 @@ export const CreateEpisode = () => {
             const formBody = new FormData()
             formBody.append("file", audioFile[0]);
             console.log("audio FormBody", formBody);
-            await axios.post('http://localhost:5000/uploads/audio', formBody)
+            await axios.post('https://fervent-kare-84a25b.netlify.app/uploads/audio', formBody)
             .then(response => {
                 console.log("response", response)
                 if(response) {

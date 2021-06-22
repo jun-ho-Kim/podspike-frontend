@@ -79,7 +79,7 @@ export const DeleteEpisode = () => {
         // event.preventDefault();
         await deleteEpisode();
         try {
-            await axios.delete(`http://localhost:5000/uploads`, {
+            await axios.delete(`https://fervent-kare-84a25b.netlify.app/uploads`, {
                 data: fileUrl
             })
             .then(response => {
