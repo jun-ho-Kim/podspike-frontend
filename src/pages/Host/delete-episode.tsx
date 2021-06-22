@@ -79,7 +79,7 @@ export const DeleteEpisode = () => {
         // event.preventDefault();
         await deleteEpisode();
         try {
-            await axios.delete(`http://podspike.herokuapp.com/uploads`, {
+            await axios.delete(`https://podspike.herokuapp.com/uploads`, {
                 data: fileUrl
             })
             .then(response => {

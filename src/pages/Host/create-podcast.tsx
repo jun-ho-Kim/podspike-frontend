@@ -76,7 +76,7 @@ export const CreatePodcast = () => {
             // })
             // ).json();
             
-            await await (axios.post('http://podspike.herokuapp.com/uploads', formBody)
+            await await (axios.post('https://podspike.herokuapp.com/uploads', formBody)
             .then(response => {
                 if(response.data.url) {
                     console.log("url", response.data.url)
