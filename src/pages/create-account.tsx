@@ -78,7 +78,7 @@ export const CreateAccount = () => {
     }
 
     return (
-        <div className="w-screen h-screen min-w-max flex justify-center items-center">
+        <div className="w-screen h-screen min-w-max flex justify-center">
             <Helmet>
                 <title>회원가입 | Podspike</title>
             </Helmet>

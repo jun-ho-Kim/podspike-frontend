@@ -153,7 +153,7 @@ export interface UpdatePodcastInput {
 
 export interface UserInputType {
   nickName: string;
-  profilePhoto: string;
+  profilePhoto?: string | null;
   email: string;
   password: string;
   passwordConfirm: string;

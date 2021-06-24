@@ -4,8 +4,8 @@ import { popularEpisode_Query } from "../../__generated__/popularEpisode_Query";
 import { PopularPodcasts } from '../Listener/popular-podcasts'
 
 export const POPULAREPISODE_QUERY = gql`
-    query popularEpisode_Query {
-        popularEpisodes {
+    query popularEpisode_Query($input: PopularEpisodesInput!) {
+        popularEpisodes(input: $input) {
             ok
             error
             popularEpisodes {
@@ -22,7 +22,13 @@ export const POPULAREPISODE_QUERY = gql`
 `;
 
 export const PopularEpisodes = () => {
-    const { data, loading, error } = useQuery<popularEpisode_Query>(POPULAREPISODE_QUERY)
+    const { data, loading, error } = useQuery<popularEpisode_Query>(POPULAREPISODE_QUERY, {
+        variables: {
+            input: {
+                page:1
+            }
+        }
+    })
     console.log("popular data", data);
     return (
         <div className='flex flex-col mt-10'>

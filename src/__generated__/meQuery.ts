@@ -19,7 +19,7 @@ export interface meQuery_me {
   id: number;
   email: string;
   nickName: string;
-  profilePhoto: string;
+  profilePhoto: string | null;
   role: UserRole;
   subscriptions: meQuery_me_subscriptions[];
 }

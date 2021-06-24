@@ -15,7 +15,7 @@ export interface editProfileMutation_editProfile_user {
   email: string;
   nickName: string;
   role: UserRole;
-  profilePhoto: string;
+  profilePhoto: string | null;
 }
 
 export interface editProfileMutation_editProfile {

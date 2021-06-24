@@ -34,7 +34,7 @@ const PodcastPopup: React.FC<PodcastPopupProps> = ({dropDownRef, popup, isHost, 
                     </Link>
                     <Link 
                         className='hover:text-white'
-                        to={`/${id}/update-podcast`}>
+                        to={`/${id}/edit-podcast`}>
                         ▪ 팟캐스트 수정
                     </Link>
                     <Link 

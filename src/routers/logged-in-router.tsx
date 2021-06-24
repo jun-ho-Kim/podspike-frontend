@@ -59,7 +59,7 @@ const listenerRouter = [
     {path: "/", component: <Home />},
     {path: "/search", component: <SearchPodcast />},
     {path: "/subscription", component: <Subscriptions />},
-    {path: "/category", component: <Categories />},
+    {path: "/categories", component: <Categories />},
     {path: "/rank", component: <PopularPodcasts />  },
 ];
 
