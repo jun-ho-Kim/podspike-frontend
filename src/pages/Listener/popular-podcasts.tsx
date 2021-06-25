@@ -5,8 +5,8 @@ import { popularPodcasts_Query } from "../../__generated__/popularPodcasts_Query
 
 
 export const POPULARPODCASTS_QUERY = gql`
-    query popularPodcasts_Query {
-        popularPodcasts {
+    query popularPodcasts_Query($input: PopularPodcastInput!) {
+        popularPodcasts(input: $input) {
             ok
             error
             popularPodcasts {
@@ -24,10 +24,16 @@ export const POPULARPODCASTS_QUERY = gql`
 `;
 
 export const PopularPodcasts = () => {
-    const {data, loading, error} = useQuery<popularPodcasts_Query>(POPULARPODCASTS_QUERY);
+    const {data, loading, error} = useQuery<popularPodcasts_Query>(POPULARPODCASTS_QUERY, {
+        variables: {
+            input: {
+                page:1
+            }
+        }
+    });
     console.log("popularPadcasts data", data);
     return (
-        <div className='flex flex-col justify-center items-center'> 
+        <div className='h-screen flex flex-col items-center'> 
             <div className='mt-10 grid grid-cols-2 gap-x-12 gap-y-8 relative'>
             <div>
                 <h2 className='mt-11 font-semibold text-2xl '>인기 팟캐스트</h2>

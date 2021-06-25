@@ -24,24 +24,26 @@ mutation loginMutation($loginInput: LoginInput!) {
 }
 `;
 
-const onCompleted = (data: loginMutation) => {
-    console.log("completed Data", data);
-    const {
-        login: {ok, token}
-    } = data;
-    try {
-        if(ok && token) {
-            localStorage.setItem(LOCALSTORAGE_TOKEN, token);
-            authTokenVar(token);
-            isLoggedInVar(true);
-        }
-    } catch(error) {
-    console.log(error);
-    }
-}
 
 
 export const Login = () => {
+    const onCompleted = (data: loginMutation) => {
+        console.log("completed Data", data);
+        const {
+            login: {ok, token}
+        } = data;
+        try {
+            if(ok && token) {
+                localStorage.setItem(LOCALSTORAGE_TOKEN, token);
+                authTokenVar(token);
+                isLoggedInVar(true);
+            } else {
+                alert("이메일이나 비밀번호가 올바르지 않습니다.")
+            }
+        } catch(error) {
+        alert("이메일이나 비밀번호가 올바르지 않습니다.")
+        }
+    }
     const {register, getValues, errors, handleSubmit, formState} = useForm<IFormProps>({
         mode: "onChange"
     });
@@ -62,7 +64,7 @@ export const Login = () => {
             <div>
             <h1
                 className='mb-8 text-2xl font-bold text-center'
-            >Login</h1>
+            >로그인</h1>
             
             <form
                 className={'grid gap-6'}

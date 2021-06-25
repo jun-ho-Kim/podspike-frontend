@@ -82,7 +82,7 @@ export const Categories = () => {
         }
     }
     return (
-            <div className='sm:max-w-sm lg:max-w-full flex flex-col items-center'>
+            <div className='h-screen sm:max-w-sm lg:max-w-full flex flex-col items-center'>
                 <h1 className='text-3xl font-bold mt-6'>카테고리</h1>
                 <div className=" flex mt-12 lg:flex-row sm:flex-col">
                 {categoryList.map((category, index) => 

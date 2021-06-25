@@ -77,7 +77,7 @@ export const DetailEpisode = () => {
     return (
         <div>
         {data?.getEpisodeDetail.episode && (
-            <div className='flex flex-col items-center mt-10'>
+            <div className='h-screen flex flex-col items-center mt-10'>
                 <div className='lg:flex lg:flex-row content-start sm:flex'>
                     <div
                         className='bg-yellow-800 w-40 h-40 p-5 mr-5 bg-center bg-cover rounded-lg' 
@@ -96,7 +96,7 @@ export const DetailEpisode = () => {
                         </h4>
                         </Link>
                         <span>{data?.getEpisodeDetail.episode?.createdAt.substring(2,10).replace(/-/g, ".")}</span>
-                        <span>{data?.getEpisodeDetail.episode.description}</span>
+                        <span className='w-72'>{data?.getEpisodeDetail.episode.description}</span>
                         <button
                             onClick={hanldeOnClick} 
                             className='bg-blue-500 px-6 py-2 rounded-3xl text-white mt-2'>{`${audioPlayerState?.isPlaying? '⏸ 일시중지'  : '▶ 에피소드 듣기'} `}</button>                    

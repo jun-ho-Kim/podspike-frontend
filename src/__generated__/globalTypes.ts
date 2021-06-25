@@ -117,6 +117,14 @@ export interface PodcastSearchInput {
   id: number;
 }
 
+export interface PopularEpisodesInput {
+  page?: number | null;
+}
+
+export interface PopularPodcastInput {
+  page?: number | null;
+}
+
 export interface ReviewInput {
   title: string;
   text: string;

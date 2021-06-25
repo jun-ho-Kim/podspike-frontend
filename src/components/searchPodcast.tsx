@@ -52,7 +52,7 @@ export const SearchPodcast = () => {
                             <p className='font-medium text-lg'>검색어를 입력해주세요</p>
                         </div>    
                         : ( 
-                        <div className="min-w-min flex flex-col items-center mt-10">
+                        <div className="h-screen min-w-min flex flex-col items-center mt-10">
                             <div className=''>
                                 <h2 className='text-lg font-bold pl-10 mr-2 inline'>검색 결과 - </h2>
                                 <span className='text-lg font-bold' >채널

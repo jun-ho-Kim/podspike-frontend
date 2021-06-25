@@ -26,7 +26,7 @@ const PodcastPopup: React.FC<PodcastPopupProps> = ({dropDownRef, popup, isHost, 
             className='absolute top-8 left-0 w-max'
         >
             {popup === true &&
-                <div className='grid grid-rows-3 gap-y-2 p-4 rounded-lg bg-blue-400 bg-opacity-50 '>
+                <div className='grid grid-rows-3 gap-y-2 p-4 rounded-lg bg-blue-400'>
                     <Link 
                         className='hover:text-white'
                         to={`/${id}/create-episode`}>
@@ -108,7 +108,7 @@ export const Podcast = () => {
 
     console.log("Data", data)
     return (
-        <div className='mt-10 flex justify-center items-center'>
+        <div className='mt-16 h-screen flex justify-center items-start'>
             {loading ? "Loading..." : (
                 <div className=' '>
                 {data?.getPodcastOne.podcast &&
@@ -119,14 +119,14 @@ export const Podcast = () => {
                                 className='bg-cover bg-center w-40 h-40 rounded-lg'  />
                                 <div className='flex flex-col ml-7'>
                                     <span className='text-blue-500 font-semibold '># {data?.getPodcastOne.podcast.category}</span>
-                                    <h3 className='text-xl font-semibold'>{data?.getPodcastOne.podcast.title}</h3>
+                                    <h3 className='w-3/4 text-xl font-semibold'>{data?.getPodcastOne.podcast.title}</h3>
                                     <p className='text-gray-500 text-sm mt-2'>구독자 <span className='text-gray-900'>
                                         {`${data?.getPodcastOne.podcast.subscriber && data?.getPodcastOne.podcast.subscriber?.length 
                                         ? data?.getPodcastOne.podcast.subscriber?.length
                                         : 0
                                     }`}</span>
                                     </p>
-                                    <span className='text-base mt-2 mb-4'>{data?.getPodcastOne.podcast.description}</span>
+                                    <span className='text-base mt-2 mb-4 w-3/4'>{data?.getPodcastOne.podcast.description}</span>
                                     {myPodcasts?.myPodcasts.myPodcasts 
                                     && myPodcasts.myPodcasts.myPodcasts.some(myPod => myPod.id === +id)
                                     ? (

@@ -7,6 +7,7 @@ import { createPodcastMutation } from "../../__generated__/createPodcastMutation
 import { useHistory } from "react-router";
 import { GETPODCAST_QUERY } from '../home'
 import { categoryList } from "../categories";
+import { FormError } from "../../components/form-error";
 
 const CREATE_PODCAST_MUTATION = gql`
     mutation createPodcastMutation($input: CreatePodcastInput!) {
@@ -20,7 +21,7 @@ const CREATE_PODCAST_MUTATION = gql`
 export const CreatePodcast = () => {
     const [thumbnail, setThumbnail] = useState();
     const history = useHistory()
-    const {register, getValues, watch, formState, handleSubmit } = useForm({
+    const {register, getValues, watch, formState, handleSubmit, errors } = useForm({
         mode: "onChange"
     })
     const { title, description, thumbnailFile, category } = getValues();
@@ -32,17 +33,13 @@ export const CreatePodcast = () => {
         } = data;
         if(ok) {
             history.push("/");
+            window.location.reload();
         } else {
             console.log("create error", error)
         }
     }
 
     const [createPodcast, {data, loading, error}] = useMutation(CREATE_PODCAST_MUTATION, {
-        refetchQueries: [
-            {
-                query: GETPODCAST_QUERY
-            }  
-        ],
         onCompleted,
         variables: {
             input: {
@@ -51,7 +48,12 @@ export const CreatePodcast = () => {
                 thumbnail,
                 category,
             }
-        }
+        },
+        // refetchQueries: [
+        //     {
+        //         query: GETPODCAST_QUERY
+        //     }  
+        // ],
     });
 
     const handleOnTitleChange = (event: any) => {
@@ -113,6 +115,7 @@ export const CreatePodcast = () => {
                     name="title"
                     type="text"
                 />
+                {errors.title?.message && <FormError error={errors.title?.message} /> }
                 <span className='mb-2'>{`${titleLength?.length}/50`}</span>
                 <label className="font-bold text-lg" >
                     방송 설명

@@ -29,11 +29,10 @@ export const UpdatePodcast = () => {
         const {
             updatePodcast: {ok, error}
         } = data;
-        console.log("update Completed", ok)
-        console.log("error", error);
         if(ok) {
             alert("수정이 완료되었습니다.")
-            history.push("/")
+            history.goBack();
+            window.location.reload();
         } else {
             alert("팟캐스트가 존재하지 않습니다.");
         }
@@ -47,7 +46,8 @@ export const UpdatePodcast = () => {
         variables: {
             input: {
                 id: +id,
-                title,
+                ...(title !== "" && {title}),
+                ...(description !== "" && {description}),
                 category,
             }
         }

@@ -1,10 +1,9 @@
-import { gql, useMutation, useQuery } from "@apollo/client";
-import React, { useEffect, useState } from 'react';
+import { gql, useMutation } from "@apollo/client";
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FormError } from '../components/form-error';
 import { Button } from '../components/button';
 import { useMe } from "../components/hooks/useMe";
-import { meQuery, meQuery_me } from "../__generated__/meQuery";
 import { editProfileMutation } from "../__generated__/editProfileMutation";
 import { useHistory } from "react-router-dom";
 import Axios from "axios";
@@ -30,11 +29,12 @@ export const EDITPROFILE_MUTATION = gql`
 export const EditProfile = () => {
     const history = useHistory();
     const {data : me} = useMe();
-    const [profilePhoto, setProfilePhoto] = useState();
+    const [profilePhoto, setProfilePhoto] = useState<string | null>();
     const {register, getValues, watch, formState,handleSubmit,errors, setValue} = useForm({
         mode: "onChange"
     });
-    const {email, nickName, password, passwordConfirm, role, photo} = getValues();
+    const {email, nickName, password, passwordConfirm, role} = getValues();
+    const { photo } = watch();
 
     const onCompleted = (data: editProfileMutation) => {
         console.log("editProfileResult complete", data);
@@ -57,37 +57,49 @@ export const EditProfile = () => {
                 email,
                 ...(nickName !== "" && {nickName}),
                 ...(password  !== "" && {password}),
-                ...(passwordConfirm  !== "" && {passwordConfirm}),
-                ...(profilePhoto !== "" && {profilePhoto}),
+                ...(profilePhoto !== "" && {profilePhoto: profilePhoto}),
                 role,
             }
         }
     });
+    console.log("photo", photo)
     const handleOnChangeEmail = (event: any) => {
         event.preventDefault();
         alert("이메일은 변경할 수 없습니다.");
-        console.log("ChangeEmail", nickName)
     };
 
     const handleOnSubmit = async () => {
-        if(photo && photo.length >0) {
-            const actualFile = photo[0];
-            const formBody = new FormData();
-            formBody.append("file", actualFile)
-            await Axios.post('https://podspike.herokuapp.com/uploads', formBody)
-            .then(response => {
-                if(response.data.url) {
-                    console.log("response.data.url", response.data.url);
-                    setProfilePhoto(response.data.url);
-                } else {
-                    console.log('profilePhoto upload error', response.data.error);
-                }
-            })   
+        let photoUrl: string;
+        console.log("photo", photo)
+        try{
+            if(photo && photo.length >0) {
+                const actualFile = photo[0];
+                const formBody = new FormData();
+                formBody.append("file", actualFile)
+                await Axios.post('https://podspike.herokuapp.com/uploads', formBody)
+                .then(response => {
+                    if(response.data.url) {
+                        console.log("response.data.url", response.data.url);
+                        photoUrl = response.data.url
+                        setProfilePhoto(photoUrl);
+                    } else {
+                        console.log('profilePhoto upload error', response.data.error);
+                    }
+                })   
+            };
+
+        } catch {
+
+        } finally {
+            editProfileMutation();
+
         }
-        editProfileMutation();
+        // setTimeout(() => {
+
+        // }, 3000)
     };
     return (
-        <div className='mt-6 lg:w-full sm:w-max w-min '>
+        <div className='mt-6 h-screen lg:w-full sm:w-max w-min '>
             <div className=''>
                 <h3 className='text-2xl text-center font-bold'>프로필 수정</h3>
                 <div className='font-bold grid gap-x-80 lg:grid-cols-3 '>

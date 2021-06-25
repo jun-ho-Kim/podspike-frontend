@@ -33,7 +33,9 @@ export const CreateEpisode = () => {
     });
     // let audioLength: number;
     const onCompleted = () => {
-        history.goBack();
+        
+        history.push("/");
+        window.location.reload();
     }
 
     const audioLengthFunc = async  (filUrl: string) => {
@@ -111,14 +113,13 @@ export const CreateEpisode = () => {
             });
             
         }
-        console.log("audioLength", audio);
         createEpisode();
     }
     return (
         <div className="font-bold  w-screen h-screen min-w-max flex flex-col justify-center items-center">
             <Helmet>
                 <title>에피소드 생성 | Podspike</title>
-            </Helmet>            
+            </Helmet>
             <h1
                 className='mb-2 text-2xl font-bold text-center'
             >

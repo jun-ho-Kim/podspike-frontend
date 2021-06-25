@@ -1,4 +1,4 @@
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import React, { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PlayerContext } from '../routers/logged-in-router';
@@ -19,11 +19,13 @@ export const AudioPlayer = () => {
     const audioPlayerState = useContext(PlayerContext);
     const audio = useRef<HTMLAudioElement>(document.createElement("audio"));
     const episodeId = audioPlayerState?.episode?.id && audioPlayerState?.episode?.id 
-    console.log("episodeId", typeof episodeId)
-    const [SawEpisodeMutation, {data, loading, error}] = useMutation<
+    const onCompleted = (data: any) => {
+    }
+    const [SawEpisodeMutation] = useMutation<
     sawEpisodeMutation, 
     sawEpisodeMutationVariables
     >(SAWEPISODE_MUTATION, {
+        onCompleted,
         variables: {
             input: {
                 id: episodeId
@@ -54,7 +56,6 @@ export const AudioPlayer = () => {
     }
     
     const handleOnChangeTime = (event: ChangeEvent<HTMLInputElement>) => {
-        console.log("event.target.value", event.target.value)
         setCurrentTime(+event.target.value);
         audio.current.currentTime = +event.target.value;
     };
@@ -64,7 +65,6 @@ export const AudioPlayer = () => {
             audio.current.pause();
             if(intervalHandler) clearInterval(intervalHandler)
             audioPlayerState?.setIsPlaying(false);
-            console.log("intervalHandler off",intervalHandler)
         } else {
             audio.current.play();
             audioPlayerState?.setIsPlaying(true)
@@ -73,11 +73,9 @@ export const AudioPlayer = () => {
             }, 1000);
         }
     };
-    const handleOnVolumeChnage = (event: any) => {
-        console.log("volume value", event.target.value);
+    const handleOnVolumeChange = (event: any) => {
         setVolume(+event.target.value);
         audio.current.volume = +event.target.value / 100
-        console.log("audio.current.volume", audio.current.volume);
     }
     useEffect(() => {
         if(audioPlayerState?.audioUrl) {
@@ -91,19 +89,17 @@ export const AudioPlayer = () => {
                 audioPlayerState?.setIsPlaying(false);
                 audio.current.currentTime = 0;
                 setCurrentTime(0);
+                setTimeout(() => {
 
-                SawEpisodeMutation();
+                    SawEpisodeMutation();
+                },5000)
             }
         }
         audio.current.src = `${audioPlayerState?.audioUrl}`;
-        
         audio.current.load();
-        console.log("audio.current.src", audio.current.src)
-        console.log("audio", audio);
     }, [audioPlayerState?.audioUrl, audio.current.ended])
-    console.log("audio Saw", data)
     return (
-        <div className="flex ">
+        <div className="flex w-max">
         {audioPlayerState?.isShowing && (
             <div 
                 className="fixed bottom-0 w-full bg-gray-300 bg-opacity-50"
@@ -143,36 +139,38 @@ export const AudioPlayer = () => {
                         <div>{secondsToTime(currentTime)}</div>
                         <div>
                             <input
-                            className='xl:px-40 lg:px-12 sm:px-8'
+                            className=' '
                                 type="range"
                                 min={0}
                                 max={duration}
                                 value={currentTime}
                                 onChange={handleOnChangeTime}
+                                // size={500}
+                                // width={500}
                                 
                             />
                         </div>
                         <div>{secondsToTime(duration)}</div>
                         <div>
                     </div>
-                        <div className='ml-16 lg:flex sm:hidden '>
+                        <div className='w-20 ml-16 lg:flex sm:hidden '>
                             <div  className='text-4xl mr-4 text-blue-500'>
-                                {volume >= 50 && <i className="fas fa-volume-down"></i>}
-                                {volume < 50 && volume != 0 && <i className="fas fa-volume-off"></i>}
-                                {volume == 0 && <i className="fas fa-volume-mute"></i>}
+                                {volume >= 50 && <i className="fas fa-volume-down w-10"></i>}
+                                {volume < 50 && volume != 0 && <i className="fas fa-volume-off w-10"></i>}
+                                {volume == 0 && <i className="fas fa-volume-mute w-10"></i>}
                             </div>
                             <input
                                 className=""
                                 type="range"
                                 min={0}
                                 max={100}
-                                onChange={handleOnVolumeChnage}
+                                onChange={handleOnVolumeChange}
                                 value={volume}
                             />
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
 
         )}
         </div>

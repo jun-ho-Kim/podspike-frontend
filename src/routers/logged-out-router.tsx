@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { CreateAccount } from '../pages/create-account';
 import { Login } from '../pages/login';
 import { NotFound } from '../pages/404';
+import { Footer } from '../components/footer';
 
 export const LoggedOutRouter = () => {
     return (
@@ -18,6 +19,7 @@ export const LoggedOutRouter = () => {
                     <NotFound />
                 </Route>
             </Switch>
+            <Footer />
         </Router>
     )
 }

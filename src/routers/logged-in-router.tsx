@@ -22,9 +22,10 @@ import { EditProfile } from '../pages/edit-profile';
 import { Subscriptions } from '../pages/Listener/subscriptions';
 import { MyPodcasts } from '../pages/Host/myPodcasts';
 import { getEpisode } from '../__generated__/getEpisode';
-import { getEpisodeDetail_Query, getEpisodeDetail_Query_getEpisodeDetail, getEpisodeDetail_Query_getEpisodeDetail_episode } from '../__generated__/getEpisodeDetail_Query';
+import { getEpisodeDetail_Query_getEpisodeDetail_episode } from '../__generated__/getEpisodeDetail_Query';
 import { useMe } from '../components/hooks/useMe';
 import { UserRole } from '../__generated__/globalTypes';
+import { Footer } from '../components/footer'
 
 interface IContext {
     isShowing: boolean;
@@ -136,6 +137,7 @@ export const LoggedInRouter = () => {
                     <NotFound />
                 </Route>
             </Switch>
+                <Footer />
             <AudioPlayer />
             
             {/* <div className={'flex items-center justify-center absolute top-0 right-0'}> */}

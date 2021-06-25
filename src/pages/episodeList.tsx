@@ -45,7 +45,10 @@ export const EpisodeList = () => {
     console.log("episode data", data?.getAllEpisode.episodes);
     console.log("episode loading", loading);
     return (
-        <div className="mt-28 lg:w-96 sm:w-60">
+        <div className='mt-10 flex items-center justify-center'>
+            
+
+        <div className="lg:w-96 sm:w-60">
             <h5 className='w-20 mb-5 font-medium border-blue-400 border-b-4'>에피소드 <span className='text-blue-500'>{data?.getAllEpisode.episodes?.length}</span></h5>
             {data?.getAllEpisode.episodes &&  data?.getAllEpisode.episodes.map((episode, index) => (
                 <div  className={`mt-2 ${episode.seenUser && episode.seenUser.some(seenUser => seenUser.id === me.data?.me.id) && 'opacity-60'}`}>
@@ -72,6 +75,7 @@ export const EpisodeList = () => {
                     </Link>
                 </div>
             ))}
+        </div>
         </div>
     );
 }

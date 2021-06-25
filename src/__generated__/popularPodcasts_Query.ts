@@ -3,6 +3,8 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { PopularPodcastInput } from "./globalTypes";
+
 // ====================================================
 // GraphQL query operation: popularPodcasts_Query
 // ====================================================
@@ -31,4 +33,8 @@ export interface popularPodcasts_Query_popularPodcasts {
 
 export interface popularPodcasts_Query {
   popularPodcasts: popularPodcasts_Query_popularPodcasts;
+}
+
+export interface popularPodcasts_QueryVariables {
+  input: PopularPodcastInput;
 }

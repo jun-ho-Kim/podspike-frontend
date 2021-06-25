@@ -5,7 +5,8 @@ import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from 'react-router-dom';
 import { Button } from "../../components/button";
-import { deleteEpisode_Mutation } from "../../__generated__/deleteEpisode_Mutation";
+import { deletePodcastMutation, deletePodcastMutationVariables } from "../../__generated__/deletePodcastMutation";
+import { GETPODCAST_QUERY } from "../home";
 
 
 export const DELETEPODCAST_MUTATION = gql`
@@ -98,23 +99,30 @@ export const DeletePodcast = () => {
     //     }
     // };
 
-    const onCompleted = (data: deleteEpisode_Mutation) => {
+    const onCompleted = (data: deletePodcastMutation) => {
         const {
-             deleteEpisode: {ok}
+             deletePodcast: {ok, error}
         } = data;
         if(ok) {
-            history.push('/');
+            history.push('/'); 
+        } else {
+            console.log("delete Pod err", error)
         }
     }
     
     
-    const [deletePodcast, {data, loading, error}] = useMutation(DELETEPODCAST_MUTATION, {
+    const [deletePodcast, {data, loading, error}] = useMutation<deletePodcastMutation ,deletePodcastMutationVariables>(DELETEPODCAST_MUTATION, {
         onCompleted,
         variables: {
             input: {
                 id: +id
             }
-        }
+        },
+        // refetchQueries : [
+        //     {
+        //         query: GETPODCAST_QUERY
+        //     }
+        // ]
     });
     
     // const {data: podcastData, loading: podcastLoading} = useQuery<getPodcastQuery>(GETPODCAST_QUERY, {
@@ -128,7 +136,7 @@ export const DeletePodcast = () => {
     
     
     
-    const handleOnSubmit = async (event: any) => {
+    const handleOnSubmit = async () => {
         // event.preventDefault();
         await deletePodcast();
         try {
@@ -136,7 +144,7 @@ export const DeletePodcast = () => {
                 data: fileUrl
             })
             .then(response => {
-                console.log("response", response)
+                console.log("delete response", response)
                 if(response.status === 200) {
                     console.log("200 ok")
                 }
