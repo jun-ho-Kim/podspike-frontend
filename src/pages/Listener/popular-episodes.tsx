@@ -34,7 +34,7 @@ export const PopularEpisodes = () => {
     })
     console.log("popular data", data);
     return (
-        <div className='flex flex-col mt-10'>
+        <div className='h-full flex flex-col mt-10'>
             <h3 className='font-semibold mt-10 mb-6 text-xl text-center'>가장 핫한 에피소드</h3>
             <div className='lg:grid grid-cols-4 sm:flex sm:flex-col'>
                 {data?.popularEpisodes.popularEpisodes?.map((episode, index) => (

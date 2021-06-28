@@ -19,7 +19,7 @@ export const Footer = () => {
                     href={'https://www.notion.so/JunhoKim-s-Profile-180d41d07b0e4af18341fa480d18779a'} target='_blank'>
                     <div
                         className="bg-center bg-cover mt-1 w-7 h-7 opacity-70" 
-                        style={{backgroundImage: `url(${'https://podspike.s3.ap-northeast-2.amazonaws.com/1624607785845_notion-logo-no-background.png'})`}} />
+                        style={{backgroundImage: `url(${'https://podspike.s3.ap-northeast-2.amazonaws.com/notionImage.png'})`}} />
 
                 </a>
                 <a 

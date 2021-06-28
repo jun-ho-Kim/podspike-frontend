@@ -33,7 +33,7 @@ export const PopularPodcasts = () => {
     });
     console.log("popularPadcasts data", data);
     return (
-        <div className='h-screen flex flex-col items-center'> 
+        <div className='h-full flex flex-col items-center'> 
             <div className='mt-10 lg:grid grid-cols-2 gap-x-12 gap-y-8 relative sm:flex sm:flex-col'>
             <div>
                 <h2 className='mt-11 font-semibold text-2xl '>인기 팟캐스트</h2>
