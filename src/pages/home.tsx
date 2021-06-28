@@ -60,7 +60,7 @@ export const Home = () =>  {
             {loading ? "Loading..." : (
             <>
             <h1 className='font-semibold mt-10 mb-6 text-xl '>뭐 듣지 고민된다면, 신규 팟캐스트</h1>
-                <div className='grid grid-cols-6 gap-6'>
+                <div className='lg:grid grid-cols-6 gap-6 sm:flex sm: flex-col'>
                     {data?.recentPodcasts.podcast && data?.recentPodcasts.podcast.map((podcast) => 
                     <Link key={podcast.id} to={`/${podcast.id}`}>
                         <PodcastList 

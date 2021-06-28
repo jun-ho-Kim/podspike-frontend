@@ -23,7 +23,7 @@ interface IParam {
 
 export const CreateEpisode = () => {
     const {id} = useParams<IParam>();
-    const [episodeImgFileUrl, setEpisodeImgFileUrl] = useState();
+    const [episodeImgFileUrl, setEpisodeImgFileUrl] = useState<string | null>();
     const [audioLength, setAudioLength] = useState<number | null>()
     const audio =  useRef<HTMLAudioElement>(document.createElement("audio"));
     const [audioFileUrl, setAudioFileUrl] = useState<string | null>();
@@ -89,8 +89,10 @@ export const CreateEpisode = () => {
                 } else {
                     console.log('error');
                 }
-            })
-        }
+                })
+            } else {
+                setEpisodeImgFileUrl("https://");
+            }
 
 
         if(audioFile && audioFile.length > 0) {

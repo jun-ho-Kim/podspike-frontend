@@ -48,7 +48,7 @@ export const EpisodeList = () => {
         <div className='mt-10 flex items-center justify-center'>
             
 
-        <div className="lg:w-96 sm:w-60">
+        <div className="lg:w-96 sm:w-60 h-screen">
             <h5 className='w-20 mb-5 font-medium border-blue-400 border-b-4'>에피소드 <span className='text-blue-500'>{data?.getAllEpisode.episodes?.length}</span></h5>
             {data?.getAllEpisode.episodes &&  data?.getAllEpisode.episodes.map((episode, index) => (
                 <div  className={`mt-2 ${episode.seenUser && episode.seenUser.some(seenUser => seenUser.id === me.data?.me.id) && 'opacity-60'}`}>
@@ -57,9 +57,9 @@ export const EpisodeList = () => {
                         to={`${id}/episodes/${episode.id}`}>
                         <div className=''>
                             <p className='text-gray-400 text-sm opacity-85'>{episode.createdAt.substring(0,10).replace(/-/g, ".")}</p>
-                            <h4 className='font-medium text-lg'>
-                                {episode.title && episode.title.length > 50 
-                                ? `${episode.title.substring(0.49)}...`
+                            <h4 className='font-medium text-lg my-1'>
+                                {episode.title && episode.title.length > 35
+                                ? `${episode.title.substring(0, 35)}...`
                                 : episode.title
                             }
                             </h4>
@@ -69,7 +69,7 @@ export const EpisodeList = () => {
                             && <p className='mr-5 self-center'>✔</p>}
                             <div 
                                 style={{backgroundImage: `url(${episode.episodeImg})`}} 
-                                className='bg-white w-14 h-14 mb-2 bg-center bg-cover'    
+                                className='mt-5 ml-2 bg-white w-14 h-14 mb-2 bg-center bg-cover rounded-md'    
                             />
                         </div>
                     </Link>

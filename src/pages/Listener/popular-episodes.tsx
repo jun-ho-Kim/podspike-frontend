@@ -36,15 +36,15 @@ export const PopularEpisodes = () => {
     return (
         <div className='flex flex-col mt-10'>
             <h3 className='font-semibold mt-10 mb-6 text-xl text-center'>가장 핫한 에피소드</h3>
-            <div className='grid grid-cols-4'>
+            <div className='lg:grid grid-cols-4 sm:flex sm:flex-col'>
                 {data?.popularEpisodes.popularEpisodes?.map((episode, index) => (
                     <Link key={index} to={`/${episode.podcast.id}/episodes/${episode.id}`}>
                         <div className='mx-8'>
                             <div 
                                 style={{backgroundImage: `url(${episode.episodeImg})`}} 
-                                className='bg-gray-400 w-40 h-32 bg-center bg-cover'    
+                                className='bg-gray-400 w-40 h-32 bg-center bg-cover rounded-lg'    
                             />
-                            <h4 className='font-semibold'>{episode.title && episode.title.length > 8 ? `${episode.title.substring(0,14)}...` : episode.title}</h4>
+                            <h4 className='font-semibold'>{episode.title && episode.title.length > 11 ? `${episode.title.substring(0,11)}...` : episode.title}</h4>
                             <span className='text-sm text-gray-400'>{episode.podcast.title && episode.podcast.title.length > 8 ? `${episode.podcast.title.substring(0,14)}...` : episode.podcast.title }</span>
                         </div>
                     </Link>

@@ -111,8 +111,8 @@ export const Header = () => {
                 </div>
             }
             {data?.me.role === "Listener" && 
-            <div className='w-full md:inline-block sm:hidden hidden py-4 px-40 text-xl'>
-                    <ul className='flex justify-around font-semibold'>
+            <div className='w-full md:inline-block py-4 px-40 text-xl'>
+                    <ul className='lg:flex justify-around font-semibold lg:flex-row sm:grid sm:grid-rows-6 sm:gap-y-3'>
                         <li className={`${pathname === '/' && 'text-blue-600 font-semibold'}`}>
                             <Link className='mr-4' to='/'>홈</Link>
                         </li>

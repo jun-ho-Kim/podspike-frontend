@@ -28,12 +28,13 @@ export const SearchPodcastForm = () => {
     return (
         <div>
             <form onSubmit={handleSubmit(handleOnSubmit)}>
-                <div className='border border-black border-opacity-30 rounded- rounded-md'>
-                <label>
+                <div className='border border-black border-opacity-30 rounded-md'>
+                <label className='flex'>
                 <input
                     className=''
                     ref={register()}
                     name='searchQuery'
+                    placeholder='검색'
                 /> 
                 <span onClick={handleOnSubmit}>🔍</span>
                 </label>

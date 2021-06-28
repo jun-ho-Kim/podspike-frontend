@@ -34,7 +34,7 @@ export const PopularPodcasts = () => {
     console.log("popularPadcasts data", data);
     return (
         <div className='h-screen flex flex-col items-center'> 
-            <div className='mt-10 grid grid-cols-2 gap-x-12 gap-y-8 relative'>
+            <div className='mt-10 lg:grid grid-cols-2 gap-x-12 gap-y-8 relative sm:flex sm:flex-col'>
             <div>
                 <h2 className='mt-11 font-semibold text-2xl '>인기 팟캐스트</h2>
                 <p className='mt-3'><span className='text-blue-400 font-semibold'>{data?.popularPodcasts.popularPodcasts?.length}</span>개의 채널</p>
@@ -42,9 +42,9 @@ export const PopularPodcasts = () => {
             <div></div>
             {data?.popularPodcasts.popularPodcasts?.map((podcast, index) => (
                 <div>
-                    <div className=''>
+                    <div className='mt-5'>
                          <Link 
-                             className="flex justify-items" 
+                             className=" flex justify-items" 
                              to={`/${podcast.id}`}>
                              <div
                                  className='w-24 h-24 bg-center bg-cover rounded-lg'
@@ -54,10 +54,12 @@ export const PopularPodcasts = () => {
                                  {index +1}
                              </h3>
                              <div className="ml-7 flex flex-col">
-                                 <h3 className="text-lg font-semibold">{podcast.title}</h3>
+                                 <h3 className="text-lg font-semibold">
+                                     {podcast.title && podcast.title.length > 18 ? `${podcast.title.substring(0,18)}...`: podcast.title}
+                                </h3>
                                  <p className="text-sm text-gray-400">
-                                     {podcast.description && podcast.description.length >35 ? 
-                                     `${podcast.description.substring(0,35)}...` : podcast.description}
+                                     {podcast.description && podcast.description.length >20 ? 
+                                     `${podcast.description.substring(0,20)}...` : podcast.description}
                                  </p>
                                  <div className='flex'>
                                      <span 
