@@ -167,7 +167,7 @@ export const DeletePodcast = () => {
         }
     }
     return(
-        <div className='flex justify-center items-center mt-20 relative'>
+        <div className='h-screen flex justify-center items-start mt-20 relative'>
                 <button
                     onClick={handleOnDeletePopup}
                     className='py-5 px-3 rounded-3xl bg-blue-400 hover:text-white'

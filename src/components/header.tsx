@@ -15,8 +15,8 @@ interface HeaderPopupProps {
 const HeaderPopup: React.FC<HeaderPopupProps> = ({dropDownRef, popup, isHost}) => {
     const history = useHistory()
     const handleOnClick = () => {
-        isLoggedInVar(false);
         localStorage.removeItem(LOCALSTORAGE_TOKEN);
+        isLoggedInVar(false);
         alert("로그아웃 되었습니다.");
         history.push("/");
     }
