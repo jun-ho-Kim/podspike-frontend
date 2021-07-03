@@ -37,13 +37,16 @@ export const Subscriptions = () => {
                 개의 채널
             </h5>
             <div className="sm:w-2/5 mt-14 flex justify-between">
+                <div className='grid grid-cols-2'>
                 {data?.subscriptions.subscriptions && data?.subscriptions.subscriptions.map((podcast, indext) => (
-                    <Link  to={`/${podcast.id}`}>
-                    <div className="flex mr-10">
+                    <Link
+                        className='border-gray-400 border-b-2 mr-5 mt-3'  
+                        to={`/${podcast.id}`}>
+                    <div className="flex  ">
                         <div 
-                            className="w-16 h-16 bg-red-300 rounded-lg bg-center bg-cover" 
+                            className="w-16 h-16 mb-2 bg-red-300 rounded-lg bg-center bg-cover" 
                             style={{backgroundImage: `url(${podcast.thumbnail})`}} />
-                        <div className="ml-3 border-gray-400 border-b-2  pr-36 border-opacity-30">
+                        <div className="ml-3   pr-1 border-opacity-30">
                             <h4 className="text-lg font-semibold">
                                 {podcast.title}
                             </h4>
@@ -56,6 +59,7 @@ export const Subscriptions = () => {
                     </div>
                     </Link>
                 ))}
+                </div>
             </div>
         </div>
     )

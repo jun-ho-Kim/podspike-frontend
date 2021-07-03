@@ -165,7 +165,7 @@ export const CreateAccount = () => {
                 >
 
                 {Object.keys(UserRole).map((role, index) => (
-                    <option key={index}>{role}</option>
+                    <option key={index} value={role}>{role}</option>
                 )
                 )}
                 </select>
